@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 4
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -5721,8 +5721,8 @@ TextureImporter:
       Dungeons_252: -1705098835
       Dungeons_176: -1622676507
       Dungeons_22: -1180386094
-      Dungeons_27: 285443337
       Dungeons_210: 1095776807
+      Dungeons_27: 285443337
       Dungeons_16: 434500442
       Dungeons_168: 2068413811
       Dungeons_34: 978479837
@@ -5748,8 +5748,8 @@ TextureImporter:
       Dungeons_151: -482216582
       Dungeons_139: -802090345
       Dungeons_121: 1249085288
-      Dungeons_87: 733176673
       Dungeons_190: -415031994
+      Dungeons_87: 733176673
       Dungeons_147: 535585709
       Dungeons_82: 1808945489
       Dungeons_230: -2066178641

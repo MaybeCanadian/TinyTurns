@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 4
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -3627,7 +3627,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Caves_165: -147892227
+      Caves_91: -1197783701
       Caves_45: 1092537199
       Caves_25: -1036634024
       Caves_13: -1736509979
@@ -3698,8 +3698,8 @@ TextureImporter:
       Caves_67: 168632753
       Caves_41: -856756267
       Caves_164: 98453718
-      Caves_129: -1033519259
       Caves_23: -117318780
+      Caves_129: -1033519259
       Caves_137: -1373245001
       Caves_40: 1195502838
       Caves_154: -874551976
@@ -3785,14 +3785,14 @@ TextureImporter:
       Caves_133: -144693030
       Caves_110: 1512321622
       Caves_139: -510862794
+      Caves_103: 575697561
       Caves_136: 553490949
-      Caves_149: -83449989
       Caves_62: 1139621414
       Caves_31: 249408478
-      Caves_103: 575697561
-      Caves_14: -755845278
-      Caves_91: -1197783701
       Caves_143: 494614532
+      Caves_149: -83449989
+      Caves_165: -147892227
+      Caves_14: -755845278
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

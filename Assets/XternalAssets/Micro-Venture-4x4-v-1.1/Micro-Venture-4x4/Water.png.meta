@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 4
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -2829,7 +2829,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Water_119: 591925397
+      Water_93: -2055968286
       Water_2: -1340278088
       Water_4: -1049135810
       Water_106: -1012273476
@@ -2956,7 +2956,7 @@ TextureImporter:
       Water_71: 1570841778
       Water_36: -1812090234
       Water_20: 1417139314
-      Water_93: -2055968286
+      Water_119: 591925397
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
