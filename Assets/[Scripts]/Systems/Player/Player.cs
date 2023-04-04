@@ -12,6 +12,8 @@ public class Player
     public Vector2Int gridPos;
     public Vector3 worldPos;
 
+    public string playerName = "Player Name";
+
     #region Init Functions
     public Player(Vector2Int startGridPos)
     {

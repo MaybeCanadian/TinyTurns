@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class PlayerVisuals : MonoBehaviour
 {
-    public Player connectedPlayer;
+    private Player connectedPlayer;
 
-    private GameObject bodyObject;
-    private SpriteRenderer bodyRenderer;
-    private GameObject feetObject;
-    private SpriteRenderer feetRenderer;
+    private GameObject PlayerObject = null;
 
     #region Init Functions
     private void OnEnable()
@@ -32,7 +29,9 @@ public class PlayerVisuals : MonoBehaviour
 
         ConnectEvents();
 
-        SetUpPlayerVisuals();
+        MoveToPlayerPos();
+
+        ShowPlayerVisuals();
     }
     private void ConnectEvents()
     {
@@ -53,16 +52,6 @@ public class PlayerVisuals : MonoBehaviour
         }
 
         connectedPlayer.OnPlayerMoved -= OnPlayerMoved;
-    }
-    private void SetUpPlayerVisuals()
-    {
-        bodyObject = new GameObject();
-        bodyObject.transform.parent = transform.parent;
-        bodyRenderer = bodyObject.AddComponent<SpriteRenderer>();
-
-        feetObject = new GameObject();
-        feetObject.transform.parent = transform.parent;
-        feetRenderer = feetObject.AddComponent<SpriteRenderer>();
     }
     #endregion
 
@@ -89,7 +78,7 @@ public class PlayerVisuals : MonoBehaviour
     #endregion
 
     #region Visuals
-    private void ShowPlayerVisuals()
+    public void ShowPlayerVisuals()
     {
         if(connectedPlayer == null)
         {
@@ -97,7 +86,28 @@ public class PlayerVisuals : MonoBehaviour
             return;
         }
 
+        GameObject playerModel = EntityModelDataBase.GetModel(EntityList.PlayerOrange);
 
+        if(playerModel == null)
+        {
+            Debug.LogError("ERROR - Could not show player visuals as player model is null.");
+            return;
+        }
+
+        PlayerObject = Instantiate(playerModel, transform);
+
+        PlayerObject.transform.position = Vector3.zero;
+
+        PlayerObject.name = (EntityList.PlayerOrange).ToString();
+    }
+    public void DestroyVisuals()
+    {
+        if(PlayerObject == null)
+        {
+            return;
+        }
+
+        Destroy(PlayerObject);
     }
     #endregion
 }

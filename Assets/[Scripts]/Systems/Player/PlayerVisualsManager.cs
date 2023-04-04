@@ -6,6 +6,8 @@ public class PlayerVisualsManager : MonoBehaviour
 {
     public static PlayerVisualsManager instance;
 
+    public GameObject playerParent = null;
+
     #region Init Functions
     private void Awake()
     {
@@ -16,7 +18,12 @@ public class PlayerVisualsManager : MonoBehaviour
         else
         {
             instance = this;
+            Init();
         }
+    }
+    private void Init()
+    {
+        SetUpParent();
     }
     private void OnEnable()
     {
@@ -34,12 +41,25 @@ public class PlayerVisualsManager : MonoBehaviour
     {
         PlayerManager.OnPlayerCreated -= OnPlayerCreated;
     }
+    private void SetUpParent()
+    {
+        playerParent = new GameObject();
+        playerParent.name = "[Players]";
+    }
     #endregion
 
     #region Event Recievers
     private void OnPlayerCreated(Player player)
     {
+        GameObject playerVisualsOBJ = new GameObject();
 
+        playerVisualsOBJ.name = player.playerName;
+
+        playerVisualsOBJ.transform.parent = playerParent.transform;
+
+        PlayerVisuals visuals = playerVisualsOBJ.AddComponent<PlayerVisuals>();
+
+        visuals.ConnectToPlayer(player);
     }
     #endregion
 }
