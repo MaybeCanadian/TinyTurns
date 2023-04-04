@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
@@ -11,9 +13,11 @@ public class Grid
     public GameObject gridParent = null;
 
     public GridNode[,] nodes = null;
-
+    private int gridLength;
+    private int gridHeight;
     private MapBounds bounds;
 
+    #region Init Functions
     public Grid(Tilemap walkAbleTileMap)
     {
         tileMap = walkAbleTileMap;
@@ -48,7 +52,10 @@ public class Grid
     {
         Vector3 tileCenterOffset = new Vector3(bounds.tileSize.x / 2, bounds.tileSize.y / 2, 0.0f);
 
-        nodes = new GridNode[bounds.xMax - bounds.xMin, bounds.yMax - bounds.yMax];
+        gridLength = bounds.xMax - bounds.xMin;
+        gridHeight = bounds.yMax - bounds.yMin; 
+
+        nodes = new GridNode[gridLength, gridHeight];
 
         int ittX = 0;
         int ittY = 0;
@@ -60,34 +67,82 @@ public class Grid
                 Vector3 worldPos = new Vector3(x, y, 0.0f) + tileCenterOffset;
                 Vector3Int gridPos = new Vector3Int(x, y, 0);
 
-                GridNode node = CreateNode(worldPos, gridPos);
-
-                nodes[ittX, ittY] = node;
-
                 if (tileMap.HasTile(gridPos))
                 {
-                    
+                    GridNode node = CreateNode(worldPos, gridPos);
+                    ConnectNodeNeighbours(node, ittX, ittY);
+                    nodes[ittX, ittY] = node;
+
+                    CreateNodeOBJ(worldPos, new Vector2Int(ittX, ittY));
+
+                    node.SetWalkable(true);
                 }
 
                 ittY++;
             }
 
+            ittY = 0;
             ittX++;
         }
     }
+    #endregion
+
+    #region Node Control
     private GridNode CreateNode(Vector3 worldPos, Vector3Int gridPos)
     {
         GridNode node = new GridNode(worldPos, gridPos);
 
-        //debug make node obj to see in editor
+        return node;
+    }
+    private void CreateNodeOBJ(Vector3 worldPos, Vector2Int gridPos)
+    {
         GameObject nodeOBJ = new GameObject();
         nodeOBJ.transform.SetParent(gridParent.transform);
         nodeOBJ.transform.position = worldPos;
-        nodeOBJ.name = "node";
-
-
-        return node;
+        nodeOBJ.name = "node: " + gridPos.x + ", " + gridPos.y;
     }
+    public GridNode GetNode(int x, int y)
+    {
+        if(x < 0 || y < 0 || x > gridLength - 1 || y > gridHeight - 1)
+        {
+            Debug.LogError("ERROR - Given gridPos is outside of the bounds of the grid.");
+            return null;
+        }
+
+        return nodes[x, y];
+    }
+    private void ConnectNodeNeighbours(GridNode node, int x, int y)
+    {
+        if(node == null)
+        {
+            Debug.LogError("ERROR - Could not connect neighbours as node is null.");
+            return;
+        }
+
+        if(x > 0)
+        {
+            GridNode leftNode = GetNode(x - 1, y);
+            node.SetNeighbour(NodeDirections.LEFT, leftNode);
+
+            if (leftNode != null)
+            {
+                leftNode.SetNeighbour(NodeDirections.RIGHT, node);
+            }
+        }
+
+        if(y > 0)
+        {
+            GridNode downNode = GetNode(x, y - 1);
+            node.SetNeighbour(NodeDirections.DOWN, downNode);
+            if (downNode != null)
+            {
+                downNode.SetNeighbour(NodeDirections.UP, node);
+            }
+        }
+
+        return;
+    }
+    #endregion
 }
 
 [System.Serializable]
