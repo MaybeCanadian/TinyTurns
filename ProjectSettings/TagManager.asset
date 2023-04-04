@@ -47,6 +47,9 @@ TagManager:
   - name: Ground Decor
     uniqueID: 2931466679
     locked: 0
+  - name: Player
+    uniqueID: 67234239
+    locked: 0
   - name: Objects
     uniqueID: 2030798999
     locked: 0

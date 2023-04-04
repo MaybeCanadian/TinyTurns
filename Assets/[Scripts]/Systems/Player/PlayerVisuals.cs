@@ -6,6 +6,11 @@ public class PlayerVisuals : MonoBehaviour
 {
     public Player connectedPlayer;
 
+    private GameObject bodyObject;
+    private SpriteRenderer bodyRenderer;
+    private GameObject feetObject;
+    private SpriteRenderer feetRenderer;
+
     #region Init Functions
     private void OnEnable()
     {
@@ -26,6 +31,8 @@ public class PlayerVisuals : MonoBehaviour
         connectedPlayer = player;
 
         ConnectEvents();
+
+        SetUpPlayerVisuals();
     }
     private void ConnectEvents()
     {
@@ -46,6 +53,16 @@ public class PlayerVisuals : MonoBehaviour
         }
 
         connectedPlayer.OnPlayerMoved -= OnPlayerMoved;
+    }
+    private void SetUpPlayerVisuals()
+    {
+        bodyObject = new GameObject();
+        bodyObject.transform.parent = transform.parent;
+        bodyRenderer = bodyObject.AddComponent<SpriteRenderer>();
+
+        feetObject = new GameObject();
+        feetObject.transform.parent = transform.parent;
+        feetRenderer = feetObject.AddComponent<SpriteRenderer>();
     }
     #endregion
 
@@ -68,6 +85,19 @@ public class PlayerVisuals : MonoBehaviour
         transform.position = connectedPlayer.worldPos;
 
         return;
+    }
+    #endregion
+
+    #region Visuals
+    private void ShowPlayerVisuals()
+    {
+        if(connectedPlayer == null)
+        {
+            Debug.LogError("ERROR - Could not show player visuals as connected player is null.");
+            return;
+        }
+
+
     }
     #endregion
 }
