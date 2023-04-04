@@ -20,6 +20,6 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        GridManager.GenerateMapGrid()
+        GridManager.GenerateMapGrid();
     }
 }

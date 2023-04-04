@@ -17,8 +17,8 @@ public static class GridManager
             return null;
         }
 
-        Grid grid = new Grid(walkable);
+        mapGrid = new Grid(walkable);
 
-        return grid;
+        return mapGrid;
     }
 }

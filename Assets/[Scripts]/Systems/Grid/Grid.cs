@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Grid : MonoBehaviour
+[System.Serializable]
+public class Grid
 {
     public Tilemap tileMap = null;
 
@@ -16,6 +17,10 @@ public class Grid : MonoBehaviour
         GenerateMapBounds();
 
         GenerateGrid();
+
+        Debug.Log("Grid Set Up");
+
+        return;
     }
     private void GenerateMapBounds()
     {
