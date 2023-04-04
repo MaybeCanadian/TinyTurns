@@ -1,17 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
     public static GameController instance;
 
-    public int gridX = 10;
-    public int gridY = 10;
-    public float gridSizeX = 1.0f;
-    public float gridSizeY = 1.0f; 
-
-    #region Init Functions
     private void Awake()
     {
         if(instance != this && instance != null)
@@ -21,14 +16,10 @@ public class GameController : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
-
-            Init();
         }
     }
-    private void Init()
+    private void Start()
     {
-        GridManager.CreateGrid(gridX, gridY, gridSizeX, gridSizeY);
+        GridManager.GenerateMapGrid()
     }
-    #endregion
 }
