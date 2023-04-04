@@ -5,11 +5,17 @@ using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
-    public static GameController instance;
+    #region Event Dispatchers
+    public delegate void UpdateEvent(float delta);
+    public static UpdateEvent OnUpdate;
+    public static UpdateEvent OnFixedUpdate;
+    public static UpdateEvent OnLateUpdate;
+    #endregion
 
-    public Player player;
+    public static GameController instance;
     public Vector3Int playerStart;
 
+    #region Init Functions
     private void Awake()
     {
         if(instance != this && instance != null)
@@ -19,12 +25,37 @@ public class GameController : MonoBehaviour
         else
         {
             instance = this;
+            Init();
         }
+    }
+    private void Init()
+    {
+        InitSystems();
+    }
+    private void InitSystems()
+    {
+        PlayerManager.OutSideInit();
     }
     private void Start()
     {
         GridManager.GenerateMapGrid();
 
-        player = new Player(playerStart);
+       
     }
+    #endregion
+
+    #region Update Functions
+    private void Update()
+    {
+        OnUpdate?.Invoke(Time.deltaTime);
+    }
+    private void FixedUpdate()
+    {
+        OnFixedUpdate?.Invoke(Time.fixedDeltaTime);
+    }
+    private void LateUpdate()
+    {
+        OnLateUpdate?.Invoke(Time.deltaTime);
+    }
+    #endregion
 }

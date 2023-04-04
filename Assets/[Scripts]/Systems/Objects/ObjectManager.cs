@@ -2,17 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectManager : MonoBehaviour
+public static class ObjectManager
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public static List<Object> objects;
 
-    // Update is called once per frame
-    void Update()
+    #region Init Functions
+    public static void OutSideInit()
     {
-        
+        CheckInit();
     }
+    private static void CheckInit()
+    {
+        if(objects == null)
+        {
+            Init();
+        }
+    }
+    private static void Init()
+    {
+        objects = new List<Object>();
+    }
+    #endregion
+
 }

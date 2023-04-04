@@ -6,6 +6,35 @@ using UnityEngine.Tilemaps;
 public static class GridManager
 {
     private static Grid mapGrid = null;
+
+    static bool init = false;
+
+    #region Init Functions
+    public static void OutSideInit()
+    {
+        CheckInit();
+
+        return;
+    }
+    private static void CheckInit()
+    {
+        if(init == false)
+        {
+            Init();
+        }
+
+        return;
+    }
+    private static void Init()
+    {
+        init = true;
+
+        Debug.Log("Grid Manager Init.");
+        return;
+    }
+    #endregion
+
+    #region Map Generation
     public static Grid GenerateMapGrid()
     {
         Tilemap walkable = WalkableLayer.GetWalkableTileMap();
@@ -24,4 +53,21 @@ public static class GridManager
     {
         return mapGrid;
     }
+    public static Vector3 GetWorldPosFromGridPos(Vector2Int gridPos)
+    {
+        if (mapGrid == null)
+        {
+            return Vector3.zero;
+        }
+
+        GridNode node = mapGrid.GetNode(gridPos.x, gridPos.y);
+
+        if(node == null)
+        {
+            return Vector3.zero;
+        }
+
+        return node.GetWorldPos();
+    }
+    #endregion
 }
