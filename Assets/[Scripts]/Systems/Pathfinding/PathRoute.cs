@@ -15,4 +15,18 @@ public class PathRoute
     {
         path.Add(node);
     }
+    public void DebugPrintSize()
+    {
+        Debug.Log("Path size is " + path.Count);
+    }
+    public void DebugPrintPath()
+    {
+        string pathString = "Path: ";
+        foreach(GridNode node in path)
+        {
+            pathString += " - " + node.GetGridPos().x + "," + node.GetGridPos().y;
+        }
+
+        Debug.Log(pathString);
+    }
 }

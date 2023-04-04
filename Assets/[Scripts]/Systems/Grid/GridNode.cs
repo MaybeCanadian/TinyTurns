@@ -66,6 +66,10 @@ public class GridNode
     {
         return worldPos;
     }
+    public Vector3Int GetGridPos()
+    {
+        return gridPos;
+    }
     #endregion
 }
 

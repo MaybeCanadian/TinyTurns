@@ -65,7 +65,7 @@ public class Grid
             for(int y = bounds.yMin; y < bounds.yMax; y++) 
             {
                 Vector3 worldPos = new Vector3(x, y, 0.0f) + tileCenterOffset;
-                Vector3Int gridPos = new Vector3Int(x, y, 0);
+                Vector3Int gridPos = new Vector3Int(ittX, ittY, 0);
 
                 if (tileMap.HasTile(gridPos))
                 {
@@ -76,6 +76,10 @@ public class Grid
                     CreateNodeOBJ(worldPos, new Vector2Int(ittX, ittY));
 
                     node.SetWalkable(true);
+                }
+                else
+                {
+                    nodes[ittX, ittY] = null;
                 }
 
                 ittY++;

@@ -21,5 +21,27 @@ public class GameController : MonoBehaviour
     private void Start()
     {
         GridManager.GenerateMapGrid();
+
+        Grid grid = GridManager.GetMapGrid();
+
+        GridNode startNode = grid.GetNode(0, 1);
+
+        if(startNode == null)
+        {
+            Debug.Log("start");
+        }
+
+        GridNode endNode = grid.GetNode(0, 0);
+
+        if(endNode == null)
+        {
+            Debug.Log("end");
+        }
+
+        if(PathfindingSystem.FindPathBetweenNodes(startNode, endNode, out PathRoute route))
+        {
+            route.DebugPrintSize();
+            route.DebugPrintPath();
+        }
     }
 }

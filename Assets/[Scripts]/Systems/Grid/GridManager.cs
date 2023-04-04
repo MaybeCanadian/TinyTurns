@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 public static class GridManager
 {
     private static Grid mapGrid = null;
-
     public static Grid GenerateMapGrid()
     {
         Tilemap walkable = WalkableLayer.GetWalkableTileMap();
@@ -19,6 +18,10 @@ public static class GridManager
 
         mapGrid = new Grid(walkable);
 
+        return mapGrid;
+    }
+    public static Grid GetMapGrid() 
+    {
         return mapGrid;
     }
 }

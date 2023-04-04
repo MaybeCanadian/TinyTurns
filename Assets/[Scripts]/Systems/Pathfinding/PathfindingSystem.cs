@@ -7,8 +7,21 @@ public static class PathfindingSystem
 {
     public static bool FindPathBetweenNodes(GridNode startNode, GridNode endNode, out PathRoute route)
     {
-        PathOperation pathingOperation = new (startNode, endNode);
         route = null;
+
+        if (startNode == null)
+        {
+            Debug.LogError("ERROR - Cannot Pathfind, start is null.");
+            return false;
+        }
+
+        if(endNode == null)
+        {
+            Debug.LogError("ERROR - Cannot Pathfind, end is null.");
+            return false;
+        }
+
+        PathOperation pathingOperation = new (startNode, endNode);
 
         if(!pathingOperation.StartOperation())
         {

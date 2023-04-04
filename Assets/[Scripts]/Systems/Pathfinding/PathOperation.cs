@@ -50,13 +50,26 @@ public class PathOperation
             EvaluateNode(frontierNode);
         }
 
+        if(!DetermineRoute())
+        {
+            return false;
+        }
+
         return true;
     }
     private void SetUpFirstNode()
     {
+        //Debug.Log("Setting up start node.");
+
         PathNode startPathNode = new (startNode);
         startPathNode.SetHCost(0);
         startPathNode.SetParentNode(null, 0);
+
+        if(startNode == endNode)
+        {
+            foundEnd = true;
+            return;
+        }
 
         EvaluateNode(startPathNode);
     }
@@ -76,9 +89,49 @@ public class PathOperation
                 continue;
             }
         }
+
+        if(frontierNode != null)
+        {
+            Debug.Log("New frontier node is " + frontierNode.GetBaseNode().GetWorldPos());
+        }
+        else
+        {
+            Debug.LogError("ERROR - Could not get a new frontier node.");
+        }
+    }
+    private bool DetermineRoute()
+    {
+        PathNode endPNode = GetNodeExists(endNode);
+
+        if(endPNode == null)
+        {
+            Debug.LogError("ERROR - Could not find end node when trying to make route.");
+            return false;
+        }
+        
+        route = new PathRoute();
+
+        PathNode currentNode = endPNode;
+
+        while(currentNode.GetParentNode() != null)
+        {
+            route.AddPointToPath(currentNode.GetBaseNode());
+
+            currentNode = currentNode.GetParentNode();
+        }
+
+        route.AddPointToPath(currentNode.GetBaseNode());
+
+        return true;
     }
     private void EvaluateNode(PathNode node)
     {
+        if(node == null)
+        {
+            Debug.LogError("ERROR - Node to evaluate is null");
+            return;
+        }
+
         foreach(GridNode nNode in node.GetBaseNode().GetNeighbours())
         {
             PathNode npNode = GetNodeExists(nNode);
@@ -108,12 +161,16 @@ public class PathOperation
     }
     private PathNode SetUpNewOpenNode(GridNode node,PathNode parent)
     {
+        //Debug.Log("Opening node " + node.GetGridPos());
+
         PathNode pNode = new (node);
         
         pNode.SetHCost(GetHueristicValue(pNode));
 
         float newGCost = GetDistanceNodeToNode(pNode, parent) + parent.GetGCost();
         pNode.SetParentNode(parent, newGCost);
+
+        openNodes.Add(pNode);
 
         if(node == endNode)
         {
