@@ -29,9 +29,9 @@ public class PlayerVisuals : MonoBehaviour
 
         ConnectEvents();
 
-        MoveToPlayerPos();
-
         ShowPlayerVisuals();
+
+        MoveToPlayerPos();
     }
     private void ConnectEvents()
     {

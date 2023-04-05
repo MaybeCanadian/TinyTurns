@@ -53,7 +53,7 @@ public class Grid
         Vector3 tileCenterOffset = new Vector3(bounds.tileSize.x / 2, bounds.tileSize.y / 2, 0.0f);
 
         gridLength = bounds.xMax - bounds.xMin;
-        gridHeight = bounds.yMax - bounds.yMin; 
+        gridHeight = bounds.yMax - bounds.yMin;
 
         nodes = new GridNode[gridLength, gridHeight];
 
@@ -64,10 +64,12 @@ public class Grid
         {
             for(int y = bounds.yMin; y < bounds.yMax; y++) 
             {
+                //Debug.Log("test");
+
                 Vector3 worldPos = new Vector3(x, y, 0.0f) + tileCenterOffset;
                 Vector3Int gridPos = new Vector3Int(ittX, ittY, 0);
 
-                if (tileMap.HasTile(gridPos))
+                if (tileMap.HasTile(new Vector3Int(x, y, 0)))
                 {
                     GridNode node = CreateNode(worldPos, gridPos);
                     ConnectNodeNeighbours(node, ittX, ittY);
@@ -80,6 +82,7 @@ public class Grid
                 else
                 {
                     nodes[ittX, ittY] = null;
+                    //CreateNodeOBJ(worldPos, new Vector2Int(ittX, ittY));
                 }
 
                 ittY++;
