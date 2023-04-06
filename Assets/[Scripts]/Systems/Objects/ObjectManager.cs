@@ -94,7 +94,7 @@ public static class ObjectManager
 
         obj.transform.parent = ObjectParent.transform;
 
-        Debug.Log("Connected Object to Parent");
+        //Debug.Log("Connected Object to Parent");
     }
     #endregion
 }

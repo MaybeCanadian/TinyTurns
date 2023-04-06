@@ -2128,7 +2128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ef7146adc1f394bbcf2da1bb3c03d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStart: {x: 30, y: 5}
+  testObjectData: {fileID: 11400000, guid: e55a0a1c17fa65342857d7e32246fed0, type: 2}
+  testObjectStart: {x: 0, y: 0}
+  moveRate: 2
 --- !u!4 &197677304
 Transform:
   m_ObjectHideFlags: 0
@@ -3332,7 +3334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82c3d83aa6ecbc4284a544c58e2db86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerParent: {fileID: 0}
 --- !u!4 &1089659588
 Transform:
   m_ObjectHideFlags: 0

@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
 
     public PathfindingObjectData testObjectData;
     public Vector2Int testObjectStart;
+    public Vector2Int testObjectPathLocation;
 
     public float moveRate = 2.0f;
 
@@ -48,7 +49,17 @@ public class GameController : MonoBehaviour
 
         testObject = ObjectManager.CreatePathfindingObject(testObjectData, testObjectStart);
 
-        InvokeRepeating("PathObjectToRandomLocation", 1.0f, moveRate);
+        GridNode start = GridManager.GetGridNode(testObjectStart.x, testObjectStart.y);
+
+        GridNode end = GridManager.GetGridNode(testObjectPathLocation.x, testObjectPathLocation.y);
+
+        PathfindingSystem.FindPathBetweenNodes(start, end, out PathRoute route);
+
+
+
+        //testObject.PathToGridPosition(testObjectPathLocation);
+
+        //InvokeRepeating("PathObjectToRandomLocation", 1.0f, moveRate);
     }
     #endregion
 
@@ -92,25 +103,25 @@ public class GameController : MonoBehaviour
     }
     private void PathObjectToRandomLocation()
     {
-        if (testObject == null)
-        {
-            Debug.Log("obj is null");
-            return;
-        }
+        //if (testObject == null)
+        //{
+        //    Debug.Log("obj is null");
+        //    return;
+        //}
 
-        Grid grid = GridManager.GetMapGrid();
+        //Grid grid = GridManager.GetMapGrid();
 
-        if (grid == null)
-        {
-            Debug.Log("grid is null");
-            return;
-        }
+        //if (grid == null)
+        //{
+        //    Debug.Log("grid is null");
+        //    return;
+        //}
 
-        Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
+        //Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
 
-        (testObject as PathfindingObject).PathToGridPosition(gridPos);
+        //(testObject as PathfindingObject).PathToGridPosition(gridPos);
 
-        Debug.Log("starting pathing object to " + gridPos);
+        //Debug.Log("starting pathing object to " + gridPos);
     }
     #endregion
 }

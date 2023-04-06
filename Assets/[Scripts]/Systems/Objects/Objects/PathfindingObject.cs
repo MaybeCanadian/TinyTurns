@@ -24,10 +24,10 @@ public class PathfindingObject : Object
     {
         base.FixedUpdate(fixedDelta);
 
-        if(currentRoute != null)
-        {
-            FollowCurrentRoute(fixedDelta);
-        }
+        //if(currentRoute != null)
+        //{
+        //    FollowCurrentRoute(fixedDelta);
+        //}
     }
     protected override void LateUpdate(float delta)
     {
@@ -46,17 +46,21 @@ public class PathfindingObject : Object
             return;
         }
 
-        if(!PathfindingSystem.FindPathBetweenNodes(currentGridNode, targetNode, out PathRoute route))
+        Debug.Log("Attempting to path from " + currentGridNode.GetGridPos() + " to " + targetNode.GetGridPos());
+
+        if (!PathfindingSystem.FindPathBetweenNodes(currentGridNode, targetNode, out PathRoute route))
         {
             Debug.Log("Could not find a path to the given grid node.");
             return;
         }
 
-        currentRoute = route;
-        currentRouteIndex = -1;
-        GetNextRoutePoint();
-        lerpTimer = 0.0f;
-        currentTargetNode = null;
+        Debug.Log("Found a path");
+
+        //currentRoute = route;
+        //currentRouteIndex = -1;
+        ////GetNextRoutePoint();
+        //lerpTimer = 0.0f;
+        //currentTargetNode = null;
     }
     protected void FollowCurrentRoute(float fixedDelta)
     {
