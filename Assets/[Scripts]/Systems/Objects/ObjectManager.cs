@@ -53,8 +53,30 @@ public static class ObjectManager
             return null;
         }
 
-        Object obj = new (data);
+        Object obj = new Object(data);
 
+        SetUpObject(obj, startPos);
+
+        return obj;
+    }
+    public static PathfindingObject CreatePathfindingObject(PathfindingObjectData data, Vector2Int startPos)
+    {
+        CheckInit();
+
+        if (data == null)
+        {
+            Debug.LogError("ERROR - Could not create object as object data is null.");
+            return null;
+        }
+
+        PathfindingObject obj = new PathfindingObject(data);
+
+        SetUpObject(obj, startPos);
+
+        return obj;
+    }
+    private static void SetUpObject(Object obj, Vector2Int startPos)
+    {
         obj.PlaceObjectAtGridPos(startPos);
 
         obj.CreateVisuals();
@@ -62,8 +84,6 @@ public static class ObjectManager
         objects.Add(obj);
 
         OnObjectCreated?.Invoke(obj);
-
-        return obj;
     }
     public static void ConnectParent(GameObject obj)
     {

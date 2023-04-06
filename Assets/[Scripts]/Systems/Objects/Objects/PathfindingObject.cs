@@ -5,8 +5,12 @@ using UnityEngine;
 public class PathfindingObject : Object
 {
     protected PathRoute currentRoute = null;
+    protected GridNode currentTargetNode = null;
+    protected int currentRouteIndex = -1;
 
-    public PathfindingObject(ObjectData data) : base(data)
+    private float lerpTimer = 0.0f;
+
+    public PathfindingObject(PathfindingObjectData data) : base(data)
     {
         ConnectEvents();
     }
@@ -19,6 +23,11 @@ public class PathfindingObject : Object
     protected override void FixedUpdate(float fixedDelta)
     {
         base.FixedUpdate(fixedDelta);
+
+        if(currentRoute != null)
+        {
+            FollowCurrentRoute(fixedDelta);
+        }
     }
     protected override void LateUpdate(float delta)
     {
@@ -44,6 +53,56 @@ public class PathfindingObject : Object
         }
 
         currentRoute = route;
+        currentRouteIndex = -1;
+        GetNextRoutePoint();
+        lerpTimer = 0.0f;
+        currentTargetNode = null;
+    }
+    protected void FollowCurrentRoute(float fixedDelta)
+    {
+        lerpTimer += (data as PathfindingObjectData).moveSpeed * fixedDelta;
+
+        if(currentTargetNode != null)
+        {
+            worldPos = Vector3.Lerp(currentGridNode.GetWorldPos(), currentTargetNode.GetWorldPos(), lerpTimer);
+        }
+
+        if(lerpTimer >= 1.0f)
+        {
+            PlaceObjectAtGridPos(new Vector2Int(currentTargetNode.GetGridPos().x, currentTargetNode.GetGridPos().y));
+
+            GetNextRoutePoint();
+
+            lerpTimer = 0.0f;
+        }
+    }
+    protected void GetNextRoutePoint()
+    {
+        currentRouteIndex++;
+
+        if (currentRoute == null)
+        {
+            Debug.LogError("ERROR - Could not get next route point as the current route is null.");
+            return;
+        }
+
+        if (currentRoute.CheckAtEnd(currentRouteIndex))
+        {
+            currentRoute = null;
+            Debug.Log("Arrived");
+            return;
+        }
+
+        currentTargetNode = currentRoute.GetNodeinPath(currentRouteIndex);
+
+        if(currentTargetNode == null)
+        {
+            currentRoute = null;
+            Debug.Log("Something went wrong with the route");
+            return;
+        }
+
+        return;
     }
     #endregion
 }

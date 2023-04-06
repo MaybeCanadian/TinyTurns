@@ -14,12 +14,12 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
-    public ObjectData testObjectData;
+    public PathfindingObjectData testObjectData;
     public Vector2Int testObjectStart;
 
     public float moveRate = 2.0f;
 
-    private Object testObject = null;
+    private PathfindingObject testObject = null;
 
     #region Init Functions
     private void Awake()
@@ -46,9 +46,9 @@ public class GameController : MonoBehaviour
     {
         GridManager.GenerateMapGrid();
 
-        testObject = ObjectManager.CreateObject(testObjectData, testObjectStart);
+        testObject = ObjectManager.CreatePathfindingObject(testObjectData, testObjectStart);
 
-        InvokeRepeating("MoveObjectToRandomLocation", moveRate, moveRate);
+        InvokeRepeating("PathObjectToRandomLocation", 1.0f, moveRate);
     }
     #endregion
 
@@ -89,6 +89,28 @@ public class GameController : MonoBehaviour
         testObject.PlaceObjectAtGridPos(gridPos);
 
         Debug.Log("moved object to " + gridPos);
+    }
+    private void PathObjectToRandomLocation()
+    {
+        if (testObject == null)
+        {
+            Debug.Log("obj is null");
+            return;
+        }
+
+        Grid grid = GridManager.GetMapGrid();
+
+        if (grid == null)
+        {
+            Debug.Log("grid is null");
+            return;
+        }
+
+        Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
+
+        (testObject as PathfindingObject).PathToGridPosition(gridPos);
+
+        Debug.Log("starting pathing object to " + gridPos);
     }
     #endregion
 }

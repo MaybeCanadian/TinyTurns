@@ -7,6 +7,7 @@ public class PathRoute
 {
     public List<GridNode> path = null;
 
+    #region Set Up
     public PathRoute()
     {
         path = new List<GridNode>();
@@ -15,6 +16,31 @@ public class PathRoute
     {
         path.Add(node);
     }
+    #endregion
+
+    #region Path Points
+    public GridNode GetNodeinPath(int index)
+    {
+        if(index < 0 || index > path.Count - 1)
+        {
+            Debug.LogError("ERROR - Could not get grid node at given index, index out of range.");
+            return null;
+        }
+
+        return path[index];
+    }
+    public bool CheckAtEnd(int index)
+    {
+        if(index == path.Count)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    #endregion
+
+    #region Debug
     public void DebugPrintSize()
     {
         Debug.Log("Path size is " + path.Count);
@@ -29,4 +55,5 @@ public class PathRoute
 
         Debug.Log(pathString);
     }
+    #endregion
 }
