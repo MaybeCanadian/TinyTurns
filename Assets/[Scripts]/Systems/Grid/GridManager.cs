@@ -53,6 +53,9 @@ public static class GridManager
     {
         return mapGrid;
     }
+    #endregion
+
+    #region Grid Functions
     public static bool GetWorldPosFromGridPos(Vector2Int gridPos, out Vector3 worldPos)
     {
         worldPos = Vector3.zero;
@@ -86,6 +89,16 @@ public static class GridManager
         }
 
         return mapGrid.FindGridPosFromWorldPos(worldPos, out gridPos);
+    }
+    public static GridNode GetGridNode(int x, int y)
+    {
+        if(mapGrid == null)
+        {
+            Debug.LogError("ERROR - Could not get grid node as grid is null.");
+            return null;
+        }
+
+        return mapGrid.GetNode(x, y);
     }
     #endregion
 }

@@ -17,6 +17,10 @@ public class GameController : MonoBehaviour
     public ObjectData testObjectData;
     public Vector2Int testObjectStart;
 
+    public float moveRate = 2.0f;
+
+    private Object testObject = null;
+
     #region Init Functions
     private void Awake()
     {
@@ -42,7 +46,9 @@ public class GameController : MonoBehaviour
     {
         GridManager.GenerateMapGrid();
 
-        ObjectManager.CreateObject(testObjectData, testObjectStart);
+        testObject = ObjectManager.CreateObject(testObjectData, testObjectStart);
+
+        InvokeRepeating("MoveObjectToRandomLocation", moveRate, moveRate);
     }
     #endregion
 
@@ -58,6 +64,31 @@ public class GameController : MonoBehaviour
     private void LateUpdate()
     {
         OnLateUpdate?.Invoke(Time.deltaTime);
+    }
+    #endregion
+
+    #region Debug
+    private void MoveObjectToRandomLocation()
+    {
+        if(testObject == null)
+        {
+            Debug.Log("obj is null");
+            return;
+        }
+
+        Grid grid = GridManager.GetMapGrid();
+
+        if(grid == null)
+        {
+            Debug.Log("grid is null");
+            return;
+        }
+
+        Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
+
+        testObject.PlaceObjectAtGridPos(gridPos);
+
+        Debug.Log("moved object to " + gridPos);
     }
     #endregion
 }

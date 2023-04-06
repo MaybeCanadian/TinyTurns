@@ -14,6 +14,8 @@ public class Object
     public Vector3 worldPos = Vector3.zero;
     public Vector2Int gridPos = Vector2Int.zero;
 
+    public GridNode currentGridNode = null;
+
     public ObjectData data = null;
     public GameObject objectOBJ = null;
 
@@ -22,17 +24,17 @@ public class Object
     {
         this.data = data;
 
-        ConnectEvents();
+        //ConnectEvents(); Base Object doesn't need events
 
-        Debug.Log("Created Object");
+        //Debug.Log("Created Object");
     }
-    private void ConnectEvents()
+    protected void ConnectEvents()
     {
         GameController.OnUpdate += Update;
         GameController.OnFixedUpdate += FixedUpdate;
         GameController.OnLateUpdate += LateUpdate;
     }
-    private void DisconnectEvents()
+    protected void DisconnectEvents()
     {
         GameController.OnUpdate -= Update;
         GameController.OnFixedUpdate -= FixedUpdate;
@@ -41,18 +43,9 @@ public class Object
     #endregion
 
     #region Update Functions
-    protected void Update(float delta)
-    {
-
-    } 
-    protected void FixedUpdate(float fixedDelta)
-    {
-
-    }
-    protected void LateUpdate(float delta)
-    {
-
-    }
+    protected virtual void Update(float delta) { }
+    protected virtual void FixedUpdate(float fixedDelta) { }
+    protected virtual void LateUpdate(float delta) { }
     #endregion
 
     #region Movement
@@ -60,12 +53,17 @@ public class Object
     {
         this.gridPos = gridPos;
 
+        currentGridNode = GridManager.GetGridNode(gridPos.x, gridPos.y);
+
         if(!GridManager.GetWorldPosFromGridPos(gridPos, out this.worldPos))
         {
 
         }
 
-        Debug.Log("Placed Object at Location");
+        if(objectOBJ != null)
+        {
+            MoveObjToPosition();
+        }
     }
     #endregion
 
@@ -103,7 +101,7 @@ public class Object
         GameObject.Destroy(objectOBJ);
         objectOBJ = null;
     }
-    private void MoveObjToPosition()
+    protected void MoveObjToPosition()
     {
         if(objectOBJ == null)
         {

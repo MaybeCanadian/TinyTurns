@@ -172,6 +172,28 @@ public class Grid
 
         return true;
     }
+    public Vector2Int GetRandomWalkableLocationOnGrid(int maxTries = 10)
+    {
+        int tryCount = 0;
+
+        while (true)
+        {
+            int x = Random.Range(0, gridLength);
+            int y = Random.Range(0, gridHeight);
+
+            if (nodes[x, y] != null)
+            {
+                return new Vector2Int(x, y);
+            }
+
+            tryCount++;
+
+            if (tryCount > maxTries)
+            {
+                return Vector2Int.zero;
+            }
+        }
+    }
     #endregion
 }
 

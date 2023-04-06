@@ -43,14 +43,14 @@ public static class ObjectManager
     #endregion
 
     #region Object Functions
-    public static void CreateObject(ObjectData data, Vector2Int startPos)
+    public static Object CreateObject(ObjectData data, Vector2Int startPos)
     {
         CheckInit();
 
         if(data == null)
         {
             Debug.LogError("ERROR - Could not create object as object data is null.");
-            return;
+            return null;
         }
 
         Object obj = new (data);
@@ -62,6 +62,8 @@ public static class ObjectManager
         objects.Add(obj);
 
         OnObjectCreated?.Invoke(obj);
+
+        return obj;
     }
     public static void ConnectParent(GameObject obj)
     {
