@@ -21,9 +21,15 @@ public static class PathfindingSystem
             return false;
         }
 
+        if(startNode == endNode)
+        {
+            Debug.Log("Already at location.");
+            return false;
+        }
+
         PathOperation pathingOperation = new (startNode, endNode);
 
-        if(!pathingOperation.StartOperation())
+        if (!pathingOperation.StartOperation())
         {
             return false;
         }

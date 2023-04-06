@@ -20,8 +20,12 @@ public class GridNode
     }
     private void SetUpNeighbourList()
     {
-        neighbours = new GridNode[4]
+        neighbours = new GridNode[8]
         {
+            null,
+            null,
+            null,
+            null,
             null,
             null,
             null,
@@ -55,6 +59,34 @@ public class GridNode
     {
         return neighbours[(int)direction];
     }
+    public void DetermineCorners()
+    {
+        if (neighbours[(int)NodeDirections.LEFT] != null)
+        {
+            if (neighbours[(int)NodeDirections.DOWN] != null)
+            {
+                SetNeighbour(NodeDirections.DOWN_LEFT, neighbours[(int)NodeDirections.LEFT].GetNeighbour(NodeDirections.DOWN));
+            }
+
+            if (neighbours[(int)NodeDirections.UP] != null)
+            {
+                SetNeighbour(NodeDirections.UP_LEFT, neighbours[(int)NodeDirections.LEFT].GetNeighbour(NodeDirections.UP));
+            }
+        }
+
+        if (neighbours[(int)NodeDirections.RIGHT] != null)
+        {
+            if (neighbours[(int)NodeDirections.DOWN] != null)
+            {
+                SetNeighbour(NodeDirections.DOWN_RIGHT, neighbours[(int)NodeDirections.RIGHT].GetNeighbour(NodeDirections.DOWN));
+            }
+
+            if (neighbours[(int)NodeDirections.UP] != null)
+            {
+                SetNeighbour(NodeDirections.UP_RIGHT, neighbours[(int)NodeDirections.RIGHT].GetNeighbour(NodeDirections.UP));
+            }
+        }
+    }
     #endregion
 
     #region Pathing
@@ -79,5 +111,9 @@ public enum NodeDirections
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    UP_LEFT,
+    UP_RIGHT,
+    DOWN_LEFT,
+    DOWN_RIGHT
 }

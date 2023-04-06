@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PathfindingObject : Object
@@ -8,7 +9,11 @@ public class PathfindingObject : Object
     protected GridNode currentTargetNode = null;
     protected int currentRouteIndex = -1;
 
+    protected Animator anims = null;
     private float lerpTimer = 0.0f;
+
+    protected float delayTimer = 0.0f;
+    protected float delay = 0.0f;
 
     public PathfindingObject(PathfindingObjectData data) : base(data)
     {
@@ -24,10 +29,33 @@ public class PathfindingObject : Object
     {
         base.FixedUpdate(fixedDelta);
 
-        //if(currentRoute != null)
-        //{
-        //    FollowCurrentRoute(fixedDelta);
-        //}
+        if (currentRoute != null)
+        {
+            FollowCurrentRoute(fixedDelta);
+        }
+        else
+        {
+            delayTimer += fixedDelta;
+
+            if (delayTimer >= delay)
+            {
+
+                Grid grid = GridManager.GetMapGrid();
+
+                if (grid == null)
+                {
+                    Debug.Log("grid is null");
+                    return;
+                }
+
+                Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
+
+                PathToGridPosition(gridPos);
+
+                delay = Random.Range(0.0f, 5.0f);
+                delayTimer = 0.0f;
+            }
+        }
     }
     protected override void LateUpdate(float delta)
     {
@@ -46,21 +74,21 @@ public class PathfindingObject : Object
             return;
         }
 
-        Debug.Log("Attempting to path from " + currentGridNode.GetGridPos() + " to " + targetNode.GetGridPos());
-
         if (!PathfindingSystem.FindPathBetweenNodes(currentGridNode, targetNode, out PathRoute route))
         {
             Debug.Log("Could not find a path to the given grid node.");
             return;
         }
 
-        Debug.Log("Found a path");
+        currentRoute = route;
+        currentRouteIndex = -1;
+        GetNextRoutePoint();
+        lerpTimer = 0.0f;
 
-        //currentRoute = route;
-        //currentRouteIndex = -1;
-        ////GetNextRoutePoint();
-        //lerpTimer = 0.0f;
-        //currentTargetNode = null;
+        if(anims != null)
+        {
+            anims.SetInteger("AnimState", (int)PathfindingAnimStates.WALKING);
+        }
     }
     protected void FollowCurrentRoute(float fixedDelta)
     {
@@ -69,16 +97,18 @@ public class PathfindingObject : Object
         if(currentTargetNode != null)
         {
             worldPos = Vector3.Lerp(currentGridNode.GetWorldPos(), currentTargetNode.GetWorldPos(), lerpTimer);
-        }
 
-        if(lerpTimer >= 1.0f)
-        {
-            PlaceObjectAtGridPos(new Vector2Int(currentTargetNode.GetGridPos().x, currentTargetNode.GetGridPos().y));
+            MoveObjToPosition();
 
-            GetNextRoutePoint();
+            if (lerpTimer >= 1.0f)
+            {
+                PlaceObjectAtGridPos(new Vector2Int(currentTargetNode.GetGridPos().x, currentTargetNode.GetGridPos().y));
 
-            lerpTimer = 0.0f;
-        }
+                GetNextRoutePoint();
+
+                lerpTimer = 0.0f;
+            }
+        }   
     }
     protected void GetNextRoutePoint()
     {
@@ -93,6 +123,11 @@ public class PathfindingObject : Object
         if (currentRoute.CheckAtEnd(currentRouteIndex))
         {
             currentRoute = null;
+
+            if(anims != null)
+            {
+                anims.SetInteger("AnimState", (int)PathfindingAnimStates.IDLE);
+            }
             Debug.Log("Arrived");
             return;
         }
@@ -106,7 +141,34 @@ public class PathfindingObject : Object
             return;
         }
 
-        return;
+        direction = currentTargetNode.GetGridPos().x - currentGridNode.GetGridPos().x;
+
+        SetOBJDirection();
     }
     #endregion
+
+    #region Visuals
+    public override void CreateVisuals()
+    {
+        base.CreateVisuals();
+
+        if(objectOBJ != null)
+        {
+            anims = objectOBJ.GetComponent<Animator>();
+            Debug.Log("found anims");
+        }
+    }
+    public override void DestroyVisuals()
+    {
+        base.DestroyVisuals();
+
+        anims = null;
+    }
+    #endregion
+}
+
+public enum PathfindingAnimStates
+{
+    IDLE,
+    WALKING
 }

@@ -14,11 +14,8 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
-    public PathfindingObjectData testObjectData;
-    public Vector2Int testObjectStart;
-    public Vector2Int testObjectPathLocation;
-
-    public float moveRate = 2.0f;
+    public PathfindingObjectData data;
+    public int numObjects = 10;
 
     private PathfindingObject testObject = null;
 
@@ -45,21 +42,13 @@ public class GameController : MonoBehaviour
     }
     private void Start()
     {
-        GridManager.GenerateMapGrid();
+        Grid grid = GridManager.GenerateMapGrid();
 
-        testObject = ObjectManager.CreatePathfindingObject(testObjectData, testObjectStart);
+        Vector2Int start = grid.GetRandomWalkableLocationOnGrid();
 
-        GridNode start = GridManager.GetGridNode(testObjectStart.x, testObjectStart.y);
+        Object obj = ObjectManager.CreatePathfindingObject(data, start);
 
-        GridNode end = GridManager.GetGridNode(testObjectPathLocation.x, testObjectPathLocation.y);
-
-        PathfindingSystem.FindPathBetweenNodes(start, end, out PathRoute route);
-
-
-
-        //testObject.PathToGridPosition(testObjectPathLocation);
-
-        //InvokeRepeating("PathObjectToRandomLocation", 1.0f, moveRate);
+        obj.SetAsFollowTarget();
     }
     #endregion
 
@@ -103,25 +92,25 @@ public class GameController : MonoBehaviour
     }
     private void PathObjectToRandomLocation()
     {
-        //if (testObject == null)
-        //{
-        //    Debug.Log("obj is null");
-        //    return;
-        //}
+        if (testObject == null)
+        {
+            Debug.Log("obj is null");
+            return;
+        }
 
-        //Grid grid = GridManager.GetMapGrid();
+        Grid grid = GridManager.GetMapGrid();
 
-        //if (grid == null)
-        //{
-        //    Debug.Log("grid is null");
-        //    return;
-        //}
+        if (grid == null)
+        {
+            Debug.Log("grid is null");
+            return;
+        }
 
-        //Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
+        Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
 
-        //(testObject as PathfindingObject).PathToGridPosition(gridPos);
+        (testObject as PathfindingObject).PathToGridPosition(gridPos);
 
-        //Debug.Log("starting pathing object to " + gridPos);
+        Debug.Log("starting pathing object to " + gridPos);
     }
     #endregion
 }

@@ -89,6 +89,14 @@ public class Grid
             ittY = 0;
             ittX++;
         }
+
+        foreach(GridNode node in nodes)
+        {
+            if(node != null)
+            {
+                node.DetermineCorners();
+            }
+        }
     }
     #endregion
 

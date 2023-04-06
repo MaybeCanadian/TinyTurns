@@ -38,6 +38,10 @@ public class PathRoute
 
         return false;
     }
+    public void InvertRoute()
+    {
+        path.Reverse();
+    }
     #endregion
 
     #region Debug

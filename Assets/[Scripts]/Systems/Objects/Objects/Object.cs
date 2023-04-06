@@ -14,6 +14,8 @@ public class Object
     public Vector3 worldPos = Vector3.zero;
     public Vector2Int gridPos = Vector2Int.zero;
 
+    protected int direction = 1;
+
     public GridNode currentGridNode = null;
 
     public ObjectData data = null;
@@ -68,7 +70,7 @@ public class Object
     #endregion
 
     #region Visuals
-    public void CreateVisuals()
+    public virtual void CreateVisuals()
     {
         GameObject model = EntityModelDataBase.GetModel(data.entityModel);
 
@@ -91,7 +93,7 @@ public class Object
 
         MoveObjToPosition();
     }
-    public void DestroyVisuals() 
+    public virtual void DestroyVisuals() 
     {
         if(objectOBJ == null)
         {
@@ -100,6 +102,23 @@ public class Object
 
         GameObject.Destroy(objectOBJ);
         objectOBJ = null;
+    }
+    public virtual void SetOBJDirection()
+    {
+        if(objectOBJ == null)
+        {
+            return;
+        }
+
+        SpriteRenderer sr = objectOBJ.GetComponent<SpriteRenderer>();
+
+        if(sr == null)
+        {
+            Debug.Log("Could not get the sprite renderer.");
+            return;
+        }
+
+        sr.flipX = direction < 0 ? true : false;
     }
     protected void MoveObjToPosition()
     {
@@ -110,6 +129,16 @@ public class Object
         }
 
         objectOBJ.transform.position = worldPos;
+    }
+    public void SetAsFollowTarget()
+    {
+        if(objectOBJ == null)
+        {
+            Debug.LogError("ERROR - Could not set follow target as object obj is null.");
+            return;
+        }
+
+        CameraFollowScript.SetFollowTarget(objectOBJ.transform);
     }
     #endregion
 

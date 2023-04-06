@@ -36,21 +36,25 @@ public class PathOperation
     }
     public bool StartOperation()
     {
+        Debug.Log("starting operation");
+
         SetUpFirstNode();
 
-        while(foundEnd == false)
+        while (foundEnd == false)
         {
             DetermineFrontierNode();
 
-            if(frontierNode == null)
+            if (frontierNode == null)
             {
                 return false;
             }
 
             EvaluateNode(frontierNode);
+
+            //Debug.Log(openNodes.Count);
         }
 
-        if(!DetermineRoute())
+        if (!DetermineRoute())
         {
             return false;
         }
@@ -75,6 +79,8 @@ public class PathOperation
     }
     private void DetermineFrontierNode()
     {
+        frontierNode = null;
+
         foreach(PathNode node in openNodes) 
         {
             if(frontierNode == null)
@@ -92,7 +98,7 @@ public class PathOperation
 
         if(frontierNode != null)
         {
-            Debug.Log("New frontier node is " + frontierNode.GetBaseNode().GetWorldPos());
+            //Debug.Log("New frontier node is " + frontierNode.GetBaseNode().GetWorldPos());
         }
         else
         {
@@ -121,6 +127,8 @@ public class PathOperation
         }
 
         route.AddPointToPath(currentNode.GetBaseNode());
+
+        route.InvertRoute();
 
         return true;
     }
