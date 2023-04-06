@@ -13,7 +13,9 @@ public class GameController : MonoBehaviour
     #endregion
 
     public static GameController instance;
-    public Vector2Int playerStart;
+
+    public ObjectData testObjectData;
+    public Vector2Int testObjectStart;
 
     #region Init Functions
     private void Awake()
@@ -35,15 +37,12 @@ public class GameController : MonoBehaviour
     private void InitSystems()
     {
         EntityModelDataBase.OutSideInit();
-
-        PlayerManager.OutSideInit();
     }
     private void Start()
     {
         GridManager.GenerateMapGrid();
 
-        PlayerManager.CreatePlayer(playerStart);
-       
+        ObjectManager.CreateObject(testObjectData, testObjectStart);
     }
     #endregion
 

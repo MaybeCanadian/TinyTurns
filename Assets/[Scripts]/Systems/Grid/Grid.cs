@@ -64,8 +64,6 @@ public class Grid
         {
             for(int y = bounds.yMin; y < bounds.yMax; y++) 
             {
-                //Debug.Log("test");
-
                 Vector3 worldPos = new Vector3(x, y, 0.0f) + tileCenterOffset;
                 Vector3Int gridPos = new Vector3Int(ittX, ittY, 0);
 
@@ -148,6 +146,31 @@ public class Grid
         }
 
         return;
+    }
+    #endregion
+
+    #region Data
+    public bool FindGridPosFromWorldPos(Vector3 worldPos, out Vector2Int gridPos)
+    {
+        gridPos = Vector2Int.zero;
+
+        float x = (worldPos.x - bounds.xMin) / bounds.tileSize.x;
+        float y = (worldPos.y - bounds.yMin) / bounds.tileSize.y;
+
+        gridPos.x = Mathf.RoundToInt(x);
+        gridPos.y = Mathf.RoundToInt(y);
+
+        if(gridPos.x < 0 || gridPos.x > gridLength - 1 || gridPos.y < 0 || gridPos.y > gridHeight - 1)
+        {
+            return false;
+        }
+
+        if (nodes[gridPos.x, gridPos.y] == null)
+        {
+            return false;
+        }
+
+        return true;
     }
     #endregion
 }

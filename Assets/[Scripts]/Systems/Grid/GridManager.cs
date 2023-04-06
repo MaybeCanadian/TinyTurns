@@ -53,21 +53,39 @@ public static class GridManager
     {
         return mapGrid;
     }
-    public static Vector3 GetWorldPosFromGridPos(Vector2Int gridPos)
+    public static bool GetWorldPosFromGridPos(Vector2Int gridPos, out Vector3 worldPos)
     {
+        worldPos = Vector3.zero;
+
         if (mapGrid == null)
         {
-            return Vector3.zero;
+            Debug.LogError("ERROR - Could not get a world positon as the grid is null.");
+            return false;
         }
 
         GridNode node = mapGrid.GetNode(gridPos.x, gridPos.y);
 
         if(node == null)
         {
-            return Vector3.zero;
+            Debug.LogError("ERROR - Could not a world position as the grid position is null.");
+            return false;
         }
 
-        return node.GetWorldPos();
+        worldPos = node.GetWorldPos();
+
+        return true;
+    }
+    public static bool GetGridPosFromWorldPos(Vector3 worldPos, out Vector2Int gridPos)
+    {
+        gridPos = Vector2Int.zero;
+
+        if (mapGrid == null)
+        {
+            Debug.LogError("ERROR - Could not get gridPos from world pos as the grid is null.");
+            return false;
+        }
+
+        return mapGrid.FindGridPosFromWorldPos(worldPos, out gridPos);
     }
     #endregion
 }
