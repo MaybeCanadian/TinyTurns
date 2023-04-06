@@ -154,7 +154,7 @@ public class PathfindingObject : Object
 
         if(objectOBJ != null)
         {
-            anims = objectOBJ.GetComponent<Animator>();
+            anims = objectOBJ.GetComponentInChildren<Animator>();
             Debug.Log("found anims");
         }
     }

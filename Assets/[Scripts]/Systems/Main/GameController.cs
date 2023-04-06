@@ -14,7 +14,8 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
-    public PathfindingObjectData data;
+    public PathfindingObjectData orangeData;
+    public PathfindingObjectData blueData;
     public int numObjects = 10;
 
     private PathfindingObject testObject = null;
@@ -46,9 +47,16 @@ public class GameController : MonoBehaviour
 
         Vector2Int start = grid.GetRandomWalkableLocationOnGrid();
 
-        Object obj = ObjectManager.CreatePathfindingObject(data, start);
+        Object obj = ObjectManager.CreatePathfindingObject(orangeData, start);
 
         obj.SetAsFollowTarget();
+
+        for (int i = 0; i < numObjects; i++)
+        {
+            start = grid.GetRandomWalkableLocationOnGrid();
+
+            obj = ObjectManager.CreatePathfindingObject(blueData, start);
+        }
     }
     #endregion
 

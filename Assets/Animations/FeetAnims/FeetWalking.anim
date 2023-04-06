@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OrangePlayerWalk
+  m_Name: FeetWalking
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -27,7 +27,7 @@ AnimationClip:
     - time: 0.6666667
       value: {fileID: -306546497, guid: d34119dad05b07340b91709ee48ba2ac, type: 3}
     attribute: m_Sprite
-    path: Feet1
+    path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -39,7 +39,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 1241049286
+      path: 0
       attribute: 0
       script: {fileID: 0}
       typeID: 212
