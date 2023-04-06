@@ -12,9 +12,6 @@ public class PathfindingObject : Object
     protected Animator anims = null;
     private float lerpTimer = 0.0f;
 
-    protected float delayTimer = 0.0f;
-    protected float delay = 0.0f;
-
     public PathfindingObject(PathfindingObjectData data) : base(data)
     {
         ConnectEvents();
@@ -32,29 +29,6 @@ public class PathfindingObject : Object
         if (currentRoute != null)
         {
             FollowCurrentRoute(fixedDelta);
-        }
-        else
-        {
-            delayTimer += fixedDelta;
-
-            if (delayTimer >= delay)
-            {
-
-                Grid grid = GridManager.GetMapGrid();
-
-                if (grid == null)
-                {
-                    Debug.Log("grid is null");
-                    return;
-                }
-
-                Vector2Int gridPos = grid.GetRandomWalkableLocationOnGrid();
-
-                PathToGridPosition(gridPos);
-
-                delay = Random.Range(0.0f, 5.0f);
-                delayTimer = 0.0f;
-            }
         }
     }
     protected override void LateUpdate(float delta)

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc90810ecd361f458e40080420d7112, type: 3}
   m_Name: PathfindingOrangePlayer
   m_EditorClassIdentifier: 
-  ObjectName: Orange Player
+  ObjectName: Player Orange
   entityModel: 1
   moveSpeed: 5

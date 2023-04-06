@@ -75,6 +75,22 @@ public static class ObjectManager
 
         return obj;
     }
+    public static PlayerObject CreatePlayerObject(PlayerObjectData data, Vector2Int startPos)
+    {
+        CheckInit();
+
+        if (data == null)
+        {
+            Debug.LogError("ERROR - Could not create object as object data is null.");
+            return null;
+        }
+
+        PlayerObject obj = new PlayerObject(data);
+
+        SetUpObject(obj, startPos);
+
+        return obj;
+    }
     private static void SetUpObject(Object obj, Vector2Int startPos)
     {
         obj.PlaceObjectAtGridPos(startPos);
