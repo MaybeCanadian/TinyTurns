@@ -6,12 +6,12 @@ using UnityEngine;
 public class GridNode
 {
     private Vector3 worldPos;
-    private Vector3Int gridPos;
+    private Vector2Int gridPos;
     bool walkable = true;
     private GridNode[] neighbours;
 
     #region Init Functions
-    public GridNode(Vector3 worldPos, Vector3Int gridPos)
+    public GridNode(Vector3 worldPos, Vector2Int gridPos)
     {
         this.worldPos = worldPos;
         this.gridPos = gridPos;
@@ -98,7 +98,7 @@ public class GridNode
     {
         return worldPos;
     }
-    public Vector3Int GetGridPos()
+    public Vector2Int GetGridPos()
     {
         return gridPos;
     }

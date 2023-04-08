@@ -65,7 +65,7 @@ public class Grid
             for(int y = bounds.yMin; y < bounds.yMax; y++) 
             {
                 Vector3 worldPos = new Vector3(x, y, 0.0f) + tileCenterOffset;
-                Vector3Int gridPos = new Vector3Int(ittX, ittY, 0);
+                Vector2Int gridPos = new Vector2Int(ittX, ittY);
 
                 if (tileMap.HasTile(new Vector3Int(x, y, 0)))
                 {
@@ -101,7 +101,7 @@ public class Grid
     #endregion
 
     #region Node Control
-    private GridNode CreateNode(Vector3 worldPos, Vector3Int gridPos)
+    private GridNode CreateNode(Vector3 worldPos, Vector2Int gridPos)
     {
         GridNode node = new GridNode(worldPos, gridPos);
 

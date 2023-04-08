@@ -4730,7 +4730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orangeData: {fileID: 11400000, guid: e55a0a1c17fa65342857d7e32246fed0, type: 2}
   blueData: {fileID: 11400000, guid: a09bbdfed5c03904d8b75257c80c6a08, type: 2}
-  numObjects: 20
+  numObjects: 5000
 --- !u!4 &197677304
 Transform:
   m_ObjectHideFlags: 0
@@ -10323,7 +10323,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1089659588}
-  - component: {fileID: 1089659587}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -10331,18 +10330,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1089659587
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1089659586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c82c3d83aa6ecbc4284a544c58e2db86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1089659588
 Transform:
   m_ObjectHideFlags: 0

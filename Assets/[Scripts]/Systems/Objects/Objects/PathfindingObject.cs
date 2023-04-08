@@ -12,6 +12,9 @@ public class PathfindingObject : Object
     protected Animator anims = null;
     private float lerpTimer = 0.0f;
 
+    protected float delay = 0.0f;
+    protected float delayTimer = 0.0f;
+
     public PathfindingObject(PathfindingObjectData data) : base(data)
     {
         ConnectEvents();
@@ -29,6 +32,10 @@ public class PathfindingObject : Object
         if (currentRoute != null)
         {
             FollowCurrentRoute(fixedDelta);
+        }
+        else
+        {
+            //Wander(fixedDelta);
         }
     }
     protected override void LateUpdate(float delta)
@@ -118,6 +125,21 @@ public class PathfindingObject : Object
         direction = currentTargetNode.GetGridPos().x - currentGridNode.GetGridPos().x;
 
         SetOBJDirection();
+    }
+    protected void Wander(float fixedDelta)
+    {
+        delayTimer += fixedDelta;
+
+        if (delayTimer >= delay)
+        {
+            delay = Random.Range(0.0f, 5.0f);
+
+            delayTimer = 0.0f;
+
+            Grid grid = GridManager.GetMapGrid();
+
+            PathToGridPosition(grid.GetRandomWalkableLocationOnGrid());
+        }
     }
     #endregion
 

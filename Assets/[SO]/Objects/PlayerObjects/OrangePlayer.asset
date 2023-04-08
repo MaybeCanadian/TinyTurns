@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 226557d7810c0444b854e1368de6ad74, type: 3}
   m_Name: OrangePlayer
   m_EditorClassIdentifier: 
-  ObjectName: Name
-  entityModel: 0
-  moveSpeed: 1
+  ObjectName: Orange Player
+  entityModel: 1
+  moveSpeed: 5
