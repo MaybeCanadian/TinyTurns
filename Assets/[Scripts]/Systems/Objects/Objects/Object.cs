@@ -21,14 +21,19 @@ public class Object
     public ObjectData data = null;
     public GameObject objectOBJ = null;
 
+    public EntityList entityID = EntityList.NULL;
+    public string objectName = "default name";
+
     #region Init Functions
     public Object(ObjectData data)
     {
         this.data = data;
 
-        //ConnectEvents(); Base Object doesn't need events
-
-        //Debug.Log("Created Object");
+        if(data != null)
+        {
+            entityID = data.entityModel;
+            objectName = data.ObjectName;
+        }
     }
     protected void ConnectEvents()
     {
@@ -70,9 +75,22 @@ public class Object
     #endregion
 
     #region Visuals
-    public virtual void CreateVisuals()
+    public virtual void CreateVisuals(bool remake = false)
     {
-        GameObject model = EntityModelDataBase.GetModel(data.entityModel);
+        if(objectOBJ != null)
+        {
+            if(remake == true)
+            {
+                DestroyVisuals();
+            }
+            else
+            {
+                //we skip as we already have visuals
+                return;
+            }
+        }
+
+        GameObject model = EntityModelDataBase.GetModel(entityID);
 
         if(model == null)
         {
@@ -89,7 +107,7 @@ public class Object
         }
 
         ObjectManager.ConnectParent(objectOBJ);
-        objectOBJ.name = data.ObjectName;
+        objectOBJ.name = objectName;
 
         MoveObjToPosition();
     }

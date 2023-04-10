@@ -6,5 +6,6 @@ public enum EntityList
 {
     NULL,
     HeroOrange,
-    HeroBlue
+    HeroBlue,
+    Movement
 }

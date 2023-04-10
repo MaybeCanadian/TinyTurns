@@ -4728,9 +4728,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73ef7146adc1f394bbcf2da1bb3c03d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orangeData: {fileID: 11400000, guid: e55a0a1c17fa65342857d7e32246fed0, type: 2}
+  playerData: {fileID: 11400000, guid: a706fb7ca8410af4fba304fea4d8f13f, type: 2}
   blueData: {fileID: 11400000, guid: a09bbdfed5c03904d8b75257c80c6a08, type: 2}
-  numObjects: 20
+  numObjects: 0
 --- !u!4 &197677304
 Transform:
   m_ObjectHideFlags: 0
@@ -37026,7 +37026,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -530920039
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}

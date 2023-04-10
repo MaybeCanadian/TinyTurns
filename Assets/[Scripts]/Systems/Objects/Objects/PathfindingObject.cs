@@ -144,9 +144,9 @@ public class PathfindingObject : Object
     #endregion
 
     #region Visuals
-    public override void CreateVisuals()
+    public override void CreateVisuals(bool remake = false)
     {
-        base.CreateVisuals();
+        base.CreateVisuals(remake);
 
         if(objectOBJ != null)
         {

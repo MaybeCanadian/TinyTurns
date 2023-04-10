@@ -19,6 +19,7 @@ public static class PlayerController
 
     #region Player
     public static PlayerObject currentPlayer = null;
+    public static SelectedNodeIndicator nodeSelector = null;
     #endregion
 
     public static Vector3 currentMouseWorldPos = Vector3.zero;
@@ -43,6 +44,8 @@ public static class PlayerController
     private static void Init()
     {
         inited = true;
+
+        nodeSelector = new SelectedNodeIndicator(null);
 
         GetCamera();
 
@@ -102,29 +105,25 @@ public static class PlayerController
         {
             if(currentMouseGridNode == null)
             {
-                currentMouseGridNode = GridManager.GetGridNode(newGridPos.x, newGridPos.y);
-
-                OnGridNodeChanged?.Invoke();
+                ChangeCurrentGridNode(GridManager.GetGridNode(newGridPos.x, newGridPos.y));
             }
             else
             {
                 if(currentMouseGridNode.GetGridPos() != newGridPos)
                 {
-                    currentMouseGridNode = GridManager.GetGridNode(newGridPos.x, newGridPos.y);
-
-                    OnGridNodeChanged?.Invoke();
+                    ChangeCurrentGridNode(GridManager.GetGridNode(newGridPos.x, newGridPos.y));
                 }
             }
+        }
+        else
+        {
+            ChangeCurrentGridNode(null);
         }
 
         if(newMouseWorldPos != currentMouseWorldPos)
         {
-            OnMouseMoved?.Invoke();
-
-            currentMouseWorldPos = newMouseWorldPos;
+            ChangeCurrentWorldPos(newMouseWorldPos);
         }
-
-
     }
     private static void MouseInputCheck()
     {
@@ -146,6 +145,35 @@ public static class PlayerController
     private static void GetCamera()
     {
         mainCamera = Camera.main;
+    }
+    #endregion
+
+    #region Node Functions
+    private static void ChangeCurrentGridNode(GridNode newNode)
+    {
+        currentMouseGridNode = newNode;
+
+        if(nodeSelector != null)
+        {
+            if (newNode != null)
+            {
+                nodeSelector.PlaceObjectAtGridPos(newNode.GetGridPos());
+
+                nodeSelector.CreateVisuals();
+            }
+            else
+            {
+                nodeSelector.DestroyVisuals();
+            }
+        }
+
+        OnGridNodeChanged?.Invoke();
+    }
+    private static void ChangeCurrentWorldPos(Vector3 newPos)
+    {
+        currentMouseWorldPos = newPos;
+
+        OnMouseMoved?.Invoke();
     }
     #endregion
 
@@ -186,6 +214,33 @@ public static class PlayerController
     private static void OnObjectRemoved()
     {
         UnPossePlayer();
+    }
+    #endregion
+
+    #region Visuals
+    public static void CreateMovementIndicatorVisuals()
+    {
+        CheckInit();
+
+        if(nodeSelector == null)
+        {
+            Debug.LogError("ERROR - Could not create movement indicator visuals as the node selector is null.");
+            return;
+        }
+
+        nodeSelector.CreateVisuals();
+    }
+    public static void DestroyMovementIndicatorVisuals()
+    {
+        CheckInit();
+
+        if (nodeSelector == null)
+        {
+            Debug.LogError("ERROR - Could not destroy movement indicator visuals as the node selector is null.");
+            return;
+        }
+
+        nodeSelector.DestroyVisuals();
     }
     #endregion
 }

@@ -53,6 +53,9 @@ TagManager:
   - name: Objects
     uniqueID: 2030798999
     locked: 0
+  - name: UI
+    uniqueID: 3657406969
+    locked: 0
   - name: Debug
     uniqueID: 3764047257
     locked: 0
