@@ -108,6 +108,42 @@ public class GridNode
         return gridPos;
     }
     #endregion
+
+    #region Objects
+    public void AddObjectToNode(Object obj)
+    {
+        objectsOnNode.Add(obj);
+    }
+    public void RemoveObjectFromNode(Object obj)
+    {
+        objectsOnNode.Remove(obj);
+    }
+    public bool IsObjectOnNode()
+    {
+        return objectsOnNode.Count > 0;
+    }
+    public List<Object> GetObjectsOnNode(ObjectTypeFilters filter = ObjectTypeFilters.None)
+    {
+        List<Object> objects = new List<Object>();
+
+        foreach(Object obj in objectsOnNode)
+        {
+            if(filter == ObjectTypeFilters.None)
+            {
+                objects.Add(obj);
+                continue;
+            }
+
+            if(obj.objType == filter)
+            {
+                objects.Add(obj);
+                continue;
+            }
+        }
+
+        return objects;
+    }
+    #endregion
 }
 
 [System.Serializable]

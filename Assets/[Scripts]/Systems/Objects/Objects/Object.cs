@@ -13,6 +13,7 @@ public class Object
 
     public Vector3 worldPos = Vector3.zero;
     public Vector2Int gridPos = Vector2Int.zero;
+    public ObjectTypeFilters objType = ObjectTypeFilters.None;
 
     protected int direction = 1;
 
@@ -29,11 +30,17 @@ public class Object
     {
         this.data = data;
 
+        SetUpObject();
+
         if(data != null)
         {
             entityID = data.entityModel;
             objectName = data.ObjectName;
         }
+    }
+    protected virtual void SetUpObject()
+    {
+        objType = ObjectTypeFilters.Object;
     }
     protected void ConnectEvents()
     {
@@ -58,6 +65,8 @@ public class Object
     #region Movement
     public void PlaceObjectAtGridPos(Vector2Int gridPos) 
     {
+        LeaveGridNode();
+
         this.gridPos = gridPos;
 
         currentGridNode = GridManager.GetGridNode(gridPos.x, gridPos.y);
@@ -66,6 +75,8 @@ public class Object
         {
 
         }
+
+        AddToGridNode();
 
         if(objectOBJ != null)
         {
@@ -167,4 +178,22 @@ public class Object
         OnObjectRemoved?.Invoke();
     }
     #endregion
+
+    #region Nodes
+
+    #endregion
+    private void LeaveGridNode()
+    {
+        if (currentGridNode != null)
+        {
+            currentGridNode.RemoveObjectFromNode(this);
+        }
+    }
+    private void AddToGridNode()
+    {
+        if (currentGridNode != null)
+        {
+            currentGridNode.AddObjectToNode(this);
+        }
+    }
 }

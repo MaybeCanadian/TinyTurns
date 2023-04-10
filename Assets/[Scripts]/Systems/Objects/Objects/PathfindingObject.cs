@@ -19,6 +19,10 @@ public class PathfindingObject : Object
     {
         ConnectEvents();
     }
+    protected override void SetUpObject()
+    {
+        objType = ObjectTypeFilters.Pathfinding;
+    }
 
     #region Update Functions
     protected override void Update(float delta)

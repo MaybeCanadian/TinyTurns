@@ -131,8 +131,18 @@ public static class PlayerController
                 if(currentPlayer != null)
                 {
                     currentPlayer.PathToGridPosition(currentMouseGridNode.GetGridPos());
-                }      
+
+                    //UnPossePlayer();
+                } 
+                else
+                {
+                    AttemptPosse();
+                }
             }
+        }
+        if(Input.GetMouseButtonDown(1))
+        {
+            UnPossePlayer();
         }
     }
     private static void GetButtonInputs()
@@ -167,6 +177,8 @@ public static class PlayerController
         OnPosse?.Invoke(player);
 
         currentPlayer.OnObjectRemoved += OnObjectRemoved;
+
+        currentPlayer.SetAsFollowTarget();
     }
     public static void UnPossePlayer()
     {
@@ -179,7 +191,27 @@ public static class PlayerController
 
         OnUnPosse?.Invoke(currentPlayer);
 
+        CameraFollowScript.UnfollowTarget();
+
         currentPlayer = null;
+    }
+    private static void AttemptPosse()
+    {
+        if (currentMouseGridNode != null)
+        {
+            List<Object> objects = currentMouseGridNode.GetObjectsOnNode(ObjectTypeFilters.Player);
+
+            if(objects.Count > 0)
+            {
+                foreach(Object obj in objects)
+                {
+                    if(obj is PlayerObject)
+                    {
+                        PossePlayer((PlayerObject)obj);
+                    }
+                }
+            }
+        }
     }
     #endregion
 

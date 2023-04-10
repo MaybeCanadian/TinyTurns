@@ -21,4 +21,8 @@ public class CameraFollowScript : MonoBehaviour
     {
         followTarget = target;
     }
+    public static void UnfollowTarget()
+    {
+        followTarget = null;
+    }
 }

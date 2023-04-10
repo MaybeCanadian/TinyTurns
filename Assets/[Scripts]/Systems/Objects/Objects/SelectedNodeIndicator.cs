@@ -9,4 +9,8 @@ public class SelectedNodeIndicator : PathfindingObject
         entityID = EntityList.Movement;
         objectName = "movement indicator";
     }
+    protected override void SetUpObject()
+    {
+        objType = ObjectTypeFilters.UI;
+    }
 }

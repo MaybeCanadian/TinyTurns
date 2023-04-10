@@ -9,6 +9,10 @@ public class PlayerObject : PathfindingObject
     {
         movementSelector = new SelectedNodeIndicator(null);
     }
+    protected override void SetUpObject()
+    {
+        objType = ObjectTypeFilters.Player;
+    }
     private void MoveMovementIndicator(GridNode newNode)
     {
         if (movementSelector != null)

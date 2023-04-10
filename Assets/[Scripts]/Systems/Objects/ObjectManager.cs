@@ -114,3 +114,12 @@ public static class ObjectManager
     }
     #endregion
 }
+
+public enum ObjectTypeFilters
+{
+    None,
+    Object,
+    Pathfinding,
+    Player,
+    UI
+}

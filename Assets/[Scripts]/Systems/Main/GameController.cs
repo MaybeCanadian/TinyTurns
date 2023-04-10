@@ -47,13 +47,16 @@ public class GameController : MonoBehaviour
     {
         Grid grid = GridManager.GenerateMapGrid();
 
-        Vector2Int start = grid.GetRandomWalkableLocationOnGrid();
+        for (int i = 0; i < numObjects; i++)
+        {
+            Vector2Int start = grid.GetRandomWalkableLocationOnGrid();
 
-        PlayerObject obj = ObjectManager.CreatePlayerObject(playerData, start);
+            PlayerObject obj = ObjectManager.CreatePlayerObject(playerData, start);
+        }
 
-        obj.SetAsFollowTarget();
+        //obj.SetAsFollowTarget();
 
-        PlayerController.PossePlayer(obj);
+        //PlayerController.PossePlayer(obj);
 
     }
     #endregion
