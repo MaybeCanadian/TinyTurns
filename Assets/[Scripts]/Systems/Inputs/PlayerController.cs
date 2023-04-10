@@ -44,6 +44,8 @@ public static class PlayerController
     {
         inited = true;
 
+        GetCamera();
+
         ConnectEvents();
     }
     private static void ConnectEvents()
@@ -63,6 +65,16 @@ public static class PlayerController
     #region Update Functions
     private static void Update(float delta)
     {
+        if(mainCamera == null)
+        {
+            GetCamera();
+
+            if(mainCamera == null)
+            {
+                return;
+            }
+        }
+
         MousePosCheck();
 
         MouseInputCheck();
@@ -84,7 +96,7 @@ public static class PlayerController
     {
         Vector2 mousePos = Input.mousePosition;
 
-        Vector3 newMouseWorldPos = mainCamera.WorldToScreenPoint(mousePos);
+        Vector3 newMouseWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
 
         if (GridManager.GetGridPosFromWorldPos(newMouseWorldPos, out Vector2Int newGridPos))
         {
@@ -108,13 +120,23 @@ public static class PlayerController
         if(newMouseWorldPos != currentMouseWorldPos)
         {
             OnMouseMoved?.Invoke();
+
+            currentMouseWorldPos = newMouseWorldPos;
         }
+
+
     }
     private static void MouseInputCheck()
     {
        if(Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Mouse");
+            if (currentMouseGridNode != null)
+            {
+                if(currentPlayer != null)
+                {
+                    currentPlayer.PathToGridPosition(currentMouseGridNode.GetGridPos());
+                }      
+            }
         }
     }
     private static void GetButtonInputs()
