@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerController
 {
@@ -14,20 +15,16 @@ public class PlayerController
     public delegate void MouseEvent();
     public MouseEvent OnMouseMoved;
     public MouseEvent OnGridNodeChanged;
-
-    public delegate void ButtonEvent(CallBackContext<bool> context);
-    public ButtonEvent OnButtonInput;
-
-    public delegate void VectorEvent(CallBackContext<Vector2> context);
-    public VectorEvent OnMoveInput;
     #endregion
 
+    #region Player
     public static PlayerObject currentPlayer = null;
+    #endregion
 
     public Vector3 currentMouseWorldPos = Vector3.zero;
     public GridNode currentMouseGridNode = null;
 
-    public Camera mainCamera;
+    private Camera mainCamera;
 
     #region Init Functions
     public PlayerController()
@@ -100,7 +97,7 @@ public class PlayerController
     }
     private void MouseInputCheck()
     {
-        
+       //foreach()
     }
     private void GetButtonInputs()
     {
@@ -149,16 +146,37 @@ public class PlayerController
     #endregion
 }
 
-#region Input Context
-public class CallBackContext<T>
+public class InputAction<T>
 {
-    public T value;
-    public ContextTypes context;
+    public delegate void InputEvent();
+    public InputEvent Pressed;
+    public InputEvent Released;
+
+    public InputStates state;
+
+    public KeyCode actionKey;
+
+    public InputAction(KeyCode key)
+    {
+        state = InputStates.UnPressed;
+        actionKey = key;
+    }
+
+    public void CheckInput()
+    {
+        if(Input.GetKeyDown(actionKey))
+        {
+            state = InputStates.Started;
+
+            Pressed?.Invoke();
+        }
+    }
 }
-public enum ContextTypes
+
+public enum InputStates
 {
-    Pressed,
+    UnPressed,
+    Started,
     Held,
     Canceled
 }
-#endregion
