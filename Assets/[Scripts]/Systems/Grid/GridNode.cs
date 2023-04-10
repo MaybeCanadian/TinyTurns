@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,11 +11,15 @@ public class GridNode
     bool walkable = true;
     private GridNode[] neighbours;
 
+    private List<Object> objectsOnNode = null;
+
     #region Init Functions
     public GridNode(Vector3 worldPos, Vector2Int gridPos)
     {
         this.worldPos = worldPos;
         this.gridPos = gridPos;
+
+        objectsOnNode = new List<Object>();
 
         SetUpNeighbourList();
     }

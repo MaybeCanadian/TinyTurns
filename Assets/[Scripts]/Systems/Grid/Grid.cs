@@ -165,8 +165,8 @@ public class Grid
         float x = (worldPos.x - bounds.xMin) / bounds.tileSize.x;
         float y = (worldPos.y - bounds.yMin) / bounds.tileSize.y;
 
-        gridPos.x = Mathf.RoundToInt(x);
-        gridPos.y = Mathf.RoundToInt(y);
+        gridPos.x = (int)x;
+        gridPos.y = (int)y;
 
         if(gridPos.x < 0 || gridPos.x > gridLength - 1 || gridPos.y < 0 || gridPos.y > gridHeight - 1)
         {
