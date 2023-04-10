@@ -36,7 +36,7 @@ public class PathOperation
     }
     public bool StartOperation()
     {
-        Debug.Log("starting operation");
+        //Debug.Log("starting operation");
 
         SetUpFirstNode();
 

@@ -109,7 +109,7 @@ public class PathfindingObject : Object
             {
                 anims.SetInteger("AnimState", (int)PathfindingAnimStates.IDLE);
             }
-            Debug.Log("Arrived");
+            //Debug.Log("Arrived");
             return;
         }
 
@@ -151,7 +151,7 @@ public class PathfindingObject : Object
         if(objectOBJ != null)
         {
             anims = objectOBJ.GetComponentInChildren<Animator>();
-            Debug.Log("found anims");
+            //Debug.Log("found anims");
         }
     }
     public override void DestroyVisuals()

@@ -57,6 +57,7 @@ public class GameController : MonoBehaviour
 
             obj = ObjectManager.CreatePathfindingObject(blueData, start);
         }
+
     }
     #endregion
 

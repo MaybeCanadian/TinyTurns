@@ -5,41 +5,54 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-public class PlayerController
+public static class PlayerController
 {
     #region Event Dispatchers
-    public delegate void PosseEvent(PlayerController controller, PlayerObject player);
-    public PosseEvent OnPosse;
-    public PosseEvent OnUnPosse;
+    public delegate void PosseEvent(PlayerObject player);
+    public static PosseEvent OnPosse;
+    public static PosseEvent OnUnPosse;
 
     public delegate void MouseEvent();
-    public MouseEvent OnMouseMoved;
-    public MouseEvent OnGridNodeChanged;
+    public static MouseEvent OnMouseMoved;
+    public static MouseEvent OnGridNodeChanged;
     #endregion
 
     #region Player
     public static PlayerObject currentPlayer = null;
     #endregion
 
-    public Vector3 currentMouseWorldPos = Vector3.zero;
-    public GridNode currentMouseGridNode = null;
+    public static Vector3 currentMouseWorldPos = Vector3.zero;
+    public static GridNode currentMouseGridNode = null;
 
-    private Camera mainCamera;
+    static bool inited = false;
+
+    private static Camera mainCamera;
 
     #region Init Functions
-    public PlayerController()
+    public static void OutSideInit()
     {
-        mainCamera = Camera.main;
+        CheckInit();
+    }
+    private static void CheckInit()
+    {
+        if(inited == false)
+        {
+            Init();
+        }
+    }
+    private static void Init()
+    {
+        inited = true;
 
         ConnectEvents();
     }
-    private void ConnectEvents()
+    private static void ConnectEvents()
     {
         GameController.OnUpdate += Update;
         GameController.OnFixedUpdate += FixedUpdate;
         GameController.OnLateUpdate += LateUpdate;
     }
-    private void DisconnectEvents()
+    private static void DisconnectEvents()
     {
         GameController.OnUpdate -= Update;
         GameController.OnFixedUpdate -= FixedUpdate;
@@ -48,24 +61,26 @@ public class PlayerController
     #endregion
 
     #region Update Functions
-    private void Update(float delta)
+    private static void Update(float delta)
     {
         MousePosCheck();
 
         MouseInputCheck();
+
+        GetButtonInputs();
     }
-    private void FixedUpdate(float fixedDelta)
+    private static void FixedUpdate(float fixedDelta)
     {
 
     }
-    private void LateUpdate(float delta)
+    private static void LateUpdate(float delta)
     {
 
     } 
     #endregion
 
-    #region Mouse
-    private void MousePosCheck()
+    #region Input
+    private static void MousePosCheck()
     {
         Vector2 mousePos = Input.mousePosition;
 
@@ -95,25 +110,32 @@ public class PlayerController
             OnMouseMoved?.Invoke();
         }
     }
-    private void MouseInputCheck()
+    private static void MouseInputCheck()
     {
-       //foreach()
+       if(Input.GetMouseButtonDown(0))
+        {
+            Debug.Log("Mouse");
+        }
     }
-    private void GetButtonInputs()
+    private static void GetButtonInputs()
     {
 
+    }
+    private static void GetCamera()
+    {
+        mainCamera = Camera.main;
     }
     #endregion
 
     #region Player Possesion
-    public void PossePlayer(PlayerObject player)
+    public static void PossePlayer(PlayerObject player)
     {
         currentPlayer = player;
-        OnPosse?.Invoke(this, player);
+        OnPosse?.Invoke(player);
 
         currentPlayer.OnObjectRemoved += OnObjectRemoved;
     }
-    public void UnPossePlayer()
+    public static void UnPossePlayer()
     {
         if(currentPlayer == null)
         {
@@ -122,14 +144,14 @@ public class PlayerController
 
         currentPlayer.OnObjectRemoved -= OnObjectRemoved;
 
-        OnUnPosse?.Invoke(this, currentPlayer);
+        OnUnPosse?.Invoke(currentPlayer);
 
         currentPlayer = null;
     }
     #endregion
 
     #region Lifecycle
-    public void DestroyController()
+    public static void DestroyController()
     {
         DisconnectEvents();
 
@@ -139,7 +161,7 @@ public class PlayerController
     #endregion
 
     #region Event Recievers
-    private void OnObjectRemoved()
+    private static void OnObjectRemoved()
     {
         UnPossePlayer();
     }
