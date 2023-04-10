@@ -4730,7 +4730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: a706fb7ca8410af4fba304fea4d8f13f, type: 2}
   blueData: {fileID: 11400000, guid: a09bbdfed5c03904d8b75257c80c6a08, type: 2}
-  numObjects: 0
+  numObjects: 20
 --- !u!4 &197677304
 Transform:
   m_ObjectHideFlags: 0

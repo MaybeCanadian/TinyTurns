@@ -29,7 +29,7 @@ public class PlayerObject : PathfindingObject
             }
         }
     }
-    public static void CreateMovementIndicatorVisuals()
+    public void CreateMovementIndicatorVisuals()
     {
         if (movementSelector == null)
         {
@@ -39,7 +39,7 @@ public class PlayerObject : PathfindingObject
 
         movementSelector.CreateVisuals();
     }
-    public static void DestroyMovementIndicatorVisuals()
+    public void DestroyMovementIndicatorVisuals()
     {
         if (movementSelector == null)
         {
@@ -49,4 +49,11 @@ public class PlayerObject : PathfindingObject
 
         movementSelector.DestroyVisuals();
     }
+
+    #region Input Recieveing
+    protected void OnMouseButtonDown()
+    {
+
+    }
+    #endregion
 }
