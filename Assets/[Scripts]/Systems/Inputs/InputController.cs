@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Bson;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,16 +6,25 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-public static class PlayerController
+public static class InputController
 {
     #region Event Dispatchers
     public delegate void PosseEvent(PlayerObject player);
     public static PosseEvent OnPosse;
     public static PosseEvent OnUnPosse;
 
-    public delegate void MouseEvent();
-    public static MouseEvent OnMouseMoved;
-    public static MouseEvent OnGridNodeChanged;
+    public delegate void MousePositionEvent();
+    public static MousePositionEvent OnMouseWorldChanged;
+    public static MousePositionEvent OnMouseGridChanged;
+
+    public delegate void MouseMoveEvent(GridNode node);
+    public static MouseMoveEvent OnMouseEnter;
+    public static MouseMoveEvent OnMouseExit;
+
+    public delegate void MouseButtonEvent(int button);
+    public static MouseButtonEvent OnMouseDown;
+
+    //public delegate void ButtonEvent(InputAction<bool> context);
     #endregion
 
     #region Player
@@ -65,14 +75,9 @@ public static class PlayerController
     #region Update Functions
     private static void Update(float delta)
     {
-        if(mainCamera == null)
+        if(GetCamera() == false)
         {
-            GetCamera();
-
-            if(mainCamera == null)
-            {
-                return;
-            }
+            return;
         }
 
         MousePosCheck();
@@ -128,45 +133,67 @@ public static class PlayerController
         {
             if (currentMouseGridNode != null)
             {
-                if(currentPlayer != null)
-                {
-                    currentPlayer.PathToGridPosition(currentMouseGridNode.GetGridPos());
+                currentMouseGridNode.OnMouseDown(0);
 
-                    //UnPossePlayer();
-                } 
-                else
-                {
-                    AttemptPosse();
-                }
+                OnMouseDown?.Invoke(0);
             }
         }
         if(Input.GetMouseButtonDown(1))
         {
-            UnPossePlayer();
+            if(currentMouseGridNode != null)
+            {
+                currentMouseGridNode.OnMouseDown(1);
+
+                OnMouseDown?.Invoke(0);
+            }
         }
     }
     private static void GetButtonInputs()
     {
 
     }
-    private static void GetCamera()
+    private static bool GetCamera()
     {
-        mainCamera = Camera.main;
+        if (mainCamera == null)
+        { 
+            mainCamera = Camera.main;
+
+            if (mainCamera == null)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
     #endregion
 
     #region Node Functions
     private static void ChangeCurrentGridNode(GridNode newNode)
     {
+        if(currentMouseGridNode != null)
+        {
+            currentMouseGridNode.OnMouseExit();
+
+            OnMouseExit?.Invoke(currentMouseGridNode);
+        }
+
         currentMouseGridNode = newNode;
 
-        OnGridNodeChanged?.Invoke();
+        if(currentMouseGridNode != null)
+        {
+            currentMouseGridNode.OnMouseEnter();
+
+            OnMouseEnter?.Invoke(currentMouseGridNode);
+        }
+
+        OnMouseGridChanged?.Invoke();
     }
     private static void ChangeCurrentWorldPos(Vector3 newPos)
     {
         currentMouseWorldPos = newPos;
 
-        OnMouseMoved?.Invoke();
+        OnMouseWorldChanged?.Invoke();
     }
     #endregion
 
@@ -259,7 +286,6 @@ public class InputAction<T>
         }
     }
 }
-
 public enum InputStates
 {
     UnPressed,

@@ -180,8 +180,6 @@ public class Object
     #endregion
 
     #region Nodes
-
-    #endregion
     private void LeaveGridNode()
     {
         if (currentGridNode != null)
@@ -196,4 +194,20 @@ public class Object
             currentGridNode.AddObjectToNode(this);
         }
     }
+    #endregion
+
+    #region Input
+    public virtual void OnMouseDown(int button)
+    {
+
+    }
+    public virtual void OnMouseEnter()
+    {
+
+    }
+    public virtual void OnMouseExit()
+    {
+
+    }
+    #endregion
 }

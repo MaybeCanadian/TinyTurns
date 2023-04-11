@@ -144,6 +144,30 @@ public class GridNode
         return objects;
     }
     #endregion
+
+    #region Input
+    public void OnMouseDown(int button)
+    {
+        foreach(Object obj in objectsOnNode)
+        {
+            obj.OnMouseDown(button);
+        }
+    }
+    public void OnMouseEnter()
+    {
+        foreach(Object obj in objectsOnNode)
+        {
+            obj.OnMouseEnter();
+        }
+    }
+    public void OnMouseExit()
+    {
+        foreach(Object obj in objectsOnNode)
+        {
+            obj.OnMouseExit();
+        }
+    }
+    #endregion
 }
 
 [System.Serializable]
