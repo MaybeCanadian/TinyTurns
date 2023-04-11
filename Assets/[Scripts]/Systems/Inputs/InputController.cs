@@ -8,11 +8,7 @@ using UnityEngine.InputSystem.LowLevel;
 
 public static class InputController
 {
-    #region Event Dispatchers
-    public delegate void PosseEvent(PlayerObject player);
-    public static PosseEvent OnPosse;
-    public static PosseEvent OnUnPosse;
-
+    #region Evetnt Dispatchers
     public delegate void MousePositionEvent();
     public static MousePositionEvent OnMouseWorldChanged;
     public static MousePositionEvent OnMouseGridChanged;
@@ -23,12 +19,6 @@ public static class InputController
 
     public delegate void MouseButtonEvent(int button);
     public static MouseButtonEvent OnMouseDown;
-
-    //public delegate void ButtonEvent(InputAction<bool> context);
-    #endregion
-
-    #region Player
-    public static PlayerObject currentPlayer = null;
     #endregion
 
     public static Vector3 currentMouseWorldPos = Vector3.zero;
@@ -197,65 +187,12 @@ public static class InputController
     }
     #endregion
 
-    #region Player Possesion
-    public static void PossePlayer(PlayerObject player)
-    {
-        currentPlayer = player;
-        OnPosse?.Invoke(player);
-
-        currentPlayer.OnObjectRemoved += OnObjectRemoved;
-
-        currentPlayer.SetAsFollowTarget();
-    }
-    public static void UnPossePlayer()
-    {
-        if(currentPlayer == null)
-        {
-            return;
-        }
-
-        currentPlayer.OnObjectRemoved -= OnObjectRemoved;
-
-        OnUnPosse?.Invoke(currentPlayer);
-
-        CameraFollowScript.UnfollowTarget();
-
-        currentPlayer = null;
-    }
-    private static void AttemptPosse()
-    {
-        if (currentMouseGridNode != null)
-        {
-            List<Object> objects = currentMouseGridNode.GetObjectsOnNode(ObjectTypeFilters.Player);
-
-            if(objects.Count > 0)
-            {
-                foreach(Object obj in objects)
-                {
-                    if(obj is PlayerObject)
-                    {
-                        PossePlayer((PlayerObject)obj);
-                    }
-                }
-            }
-        }
-    }
-    #endregion
-
     #region Lifecycle
     public static void DestroyController()
     {
         DisconnectEvents();
 
         mainCamera = null;
-        currentPlayer = null;
-    }
-    #endregion
-
-    #region Event Recievers
-    private static void OnObjectRemoved()
-    {
-        UnPossePlayer();
     }
     #endregion
 }
