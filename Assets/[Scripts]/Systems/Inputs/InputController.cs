@@ -19,6 +19,8 @@ public static class InputController
 
     public delegate void MouseButtonEvent(int button);
     public static MouseButtonEvent OnMouseDown;
+    public static MouseButtonEvent OnMouseHeld;
+    public static MouseButtonEvent OnMouseUp;
     #endregion
 
     public static Vector3 currentMouseWorldPos = Vector3.zero;
@@ -70,9 +72,11 @@ public static class InputController
             return;
         }
 
-        MousePosCheck();
-
-        MouseInputCheck();
+        if (Input.mousePresent)
+        {
+            MousePosCheck();
+            MouseInputCheck();
+        }
 
         GetButtonInputs();
     }
@@ -119,22 +123,31 @@ public static class InputController
     }
     private static void MouseInputCheck()
     {
-       if(Input.GetMouseButtonDown(0))
+        for (int i = 0; i < 3; i++)
         {
-            if (currentMouseGridNode != null)
+            if (Input.GetMouseButtonDown(i))
             {
-                currentMouseGridNode.OnMouseDown(0);
+                currentMouseGridNode?.OnMouseDown(i);
 
-                OnMouseDown?.Invoke(0);
+                OnMouseDown?.Invoke(i);
+
+                //Debug.Log("mouse " + i + " down");
             }
-        }
-        if(Input.GetMouseButtonDown(1))
-        {
-            if(currentMouseGridNode != null)
+            if (Input.GetMouseButtonUp(i))
             {
-                currentMouseGridNode.OnMouseDown(1);
+                currentMouseGridNode?.OnMouseUp(i);
 
-                OnMouseDown?.Invoke(0);
+                OnMouseUp?.Invoke(i);
+
+                //Debug.Log("mouse " + i + " Up");
+            }
+            if (Input.GetMouseButton(i))
+            {
+                currentMouseGridNode?.OnMouseHeld(i);
+
+                OnMouseHeld?.Invoke(i);
+
+                //Debug.Log("mouse " + i + " Held");
             }
         }
     }

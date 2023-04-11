@@ -153,6 +153,14 @@ public class GridNode
             obj.OnMouseDown(button);
         }
     }
+    public void OnMouseUp(int button)
+    {
+
+    }
+    public void OnMouseHeld(int button)
+    {
+
+    }
     public void OnMouseEnter()
     {
         foreach(Object obj in objectsOnNode)
