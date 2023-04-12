@@ -16,6 +16,7 @@ public static class InputController
     public delegate void MouseMoveEvent(GridNode node);
     public static MouseMoveEvent OnMouseEnter;
     public static MouseMoveEvent OnMouseExit;
+    public static MouseMoveEvent OnMouseOver;
 
     public delegate void MouseButtonEvent(int button);
     public static MouseButtonEvent OnMouseDown;
@@ -108,6 +109,12 @@ public static class InputController
                 if(currentMouseGridNode.GetGridPos() != newGridPos)
                 {
                     ChangeCurrentGridNode(GridManager.GetGridNode(newGridPos.x, newGridPos.y));
+                }
+                else
+                {
+                    currentMouseGridNode.OnMouseOver();
+
+                    OnMouseOver?.Invoke(currentMouseGridNode);
                 }
             }
         }

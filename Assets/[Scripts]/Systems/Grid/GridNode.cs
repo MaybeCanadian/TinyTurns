@@ -146,6 +146,7 @@ public class GridNode
     #endregion
 
     #region Input
+    #region Mouse Inputs
     public void OnMouseDown(int button)
     {
         foreach(Object obj in objectsOnNode)
@@ -155,12 +156,22 @@ public class GridNode
     }
     public void OnMouseUp(int button)
     {
-
+        foreach(Object obj in objectsOnNode)
+        {
+            obj.OnMouseUp(button);
+        }
     }
     public void OnMouseHeld(int button)
     {
+        foreach (Object obj in objectsOnNode)
+        {
+            obj.OnMouseHeld(button);
+        }
 
     }
+    #endregion
+
+    #region Mouse Movement
     public void OnMouseEnter()
     {
         foreach(Object obj in objectsOnNode)
@@ -175,6 +186,14 @@ public class GridNode
             obj.OnMouseExit();
         }
     }
+    public void OnMouseOver()
+    {
+        foreach (Object obj in objectsOnNode)
+        {
+            obj.OnMouseOver();
+        }
+    }
+    #endregion
     #endregion
 }
 

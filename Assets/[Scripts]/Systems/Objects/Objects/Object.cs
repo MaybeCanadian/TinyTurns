@@ -197,10 +197,22 @@ public class Object
     #endregion
 
     #region Input
+    #region Mouse Inputs
     public virtual void OnMouseDown(int button)
     {
 
     }
+    public virtual void OnMouseUp(int button)
+    {
+
+    }
+    public virtual void OnMouseHeld(int button)
+    {
+
+    }
+    #endregion
+
+    #region Mouse Movement
     public virtual void OnMouseEnter()
     {
 
@@ -209,5 +221,10 @@ public class Object
     {
 
     }
+    public virtual void OnMouseOver()
+    {
+
+    }
+    #endregion
     #endregion
 }
