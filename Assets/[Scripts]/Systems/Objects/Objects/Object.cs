@@ -42,13 +42,13 @@ public class Object
     {
         objType = ObjectTypeFilters.Object;
     }
-    protected void ConnectEvents()
+    protected virtual void ConnectEvents()
     {
         GameController.OnUpdate += Update;
         GameController.OnFixedUpdate += FixedUpdate;
         GameController.OnLateUpdate += LateUpdate;
     }
-    protected void DisconnectEvents()
+    protected virtual void DisconnectEvents()
     {
         GameController.OnUpdate -= Update;
         GameController.OnFixedUpdate -= FixedUpdate;
@@ -172,8 +172,10 @@ public class Object
     #endregion
 
     #region Lifecycle
-    public void DestroyObject()
+    public virtual void DestroyObject()
     {
+        DisconnectEvents();
+
         DestroyVisuals();
         OnObjectRemoved?.Invoke();
     }

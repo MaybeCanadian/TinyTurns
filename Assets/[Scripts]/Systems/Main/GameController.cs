@@ -14,9 +14,13 @@ public class GameController : MonoBehaviour
 
     public static GameController instance;
 
+    [Header("Players")]
     public PlayerObjectData playerData;
     public PathfindingObjectData blueData;
     public int numObjects = 10;
+
+    [Header("Controllers")]
+    public PlayerController controller = null;
 
     private PathfindingObject testObject = null;
 
@@ -42,8 +46,6 @@ public class GameController : MonoBehaviour
         EntityModelDataBase.OutSideInit();
 
         InputController.OutSideInit();
-
-        PlayerController.OutSideInit();
     }
     private void Start()
     {
@@ -56,10 +58,7 @@ public class GameController : MonoBehaviour
             PlayerObject obj = ObjectManager.CreatePlayerObject(playerData, start);
         }
 
-        //obj.SetAsFollowTarget();
-
-        //PlayerController.PossePlayer(obj);
-
+        controller = new PlayerController();
     }
     #endregion
 

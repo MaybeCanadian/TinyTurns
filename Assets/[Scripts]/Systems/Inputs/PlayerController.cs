@@ -2,58 +2,94 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class PlayerController
+[System.Serializable]
+public class PlayerController
 {
-    public static GameObject controllerCameraFocus = null;
-
-    private static bool inited = false;
+    public GameObject controllerCameraFocus = null;
+    public PlayerObject activePlayer = null;
 
     #region Init Functions
-    public static void OutSideInit()
-    {
-        CheckInit();
-    }
-    private static void CheckInit()
-    {
-        if(inited == false)
-        {
-            Init();
-        }
-    }
-    private static void Init()
+    public PlayerController()
     {
         ConnectEvents();
-
-        inited = true;
     }
-    private static void ConnectEvents()
+    ~PlayerController()
+    {
+        DisconnectEvents();
+    }
+    private void ConnectEvents()
     {
         InputController.OnMouseDown += OnMouseDown;
         InputController.OnMouseUp += OnMouseUp;
         InputController.OnMouseHeld += OnMouseHeld;
 
-
+        GridNode.OnGridNodeClicked += OnGridNodeClicked;
     }
-    private static void DisconnectEvents()
+    private void DisconnectEvents()
     {
         InputController.OnMouseDown -= OnMouseDown;
         InputController.OnMouseUp -= OnMouseUp;
         InputController.OnMouseHeld -= OnMouseHeld;
+
+        GridNode.OnGridNodeClicked -= OnGridNodeClicked;
     }
     #endregion
 
     #region Event Receivers
-    private static void OnMouseDown(int button)
+    private void OnMouseDown(int button)
     {
 
     }
-    private static void OnMouseUp(int button)
+    private void OnMouseUp(int button)
     {
 
     }
-    private static void OnMouseHeld(int button)
+    private void OnMouseHeld(int button)
     {
 
+    }
+    private void OnGridNodeClicked(GridNode node, int button)
+    {
+        if(button == 0)
+        {
+            if (activePlayer == null)
+            {
+                List<Object> objs = node.GetObjectsOnNode();
+
+                AttempPosse(objs);
+            }
+        }
+    }
+    #endregion
+
+    #region Input Handling
+
+    #endregion
+
+    #region Possesing
+    private void AttempPosse(List<Object> objs)
+    {
+        foreach(Object obj in objs)
+        {
+            if(obj.objType == ObjectTypeFilters.Player)
+            {
+                if(obj is PlayerObject)
+                {
+                    if((obj as PlayerObject).TryPosse(this))
+                    {
+                        activePlayer = obj as PlayerObject;
+
+                        Debug.Log("possesed");
+
+                        return;
+                    }
+                }
+            }
+        }
+    }
+    public void ActivePlayerStopPosse()
+    {
+        activePlayer = null;
     }
     #endregion
 }

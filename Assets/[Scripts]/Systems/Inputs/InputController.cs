@@ -137,24 +137,18 @@ public static class InputController
                 currentMouseGridNode?.OnMouseDown(i);
 
                 OnMouseDown?.Invoke(i);
-
-                //Debug.Log("mouse " + i + " down");
             }
             if (Input.GetMouseButtonUp(i))
             {
                 currentMouseGridNode?.OnMouseUp(i);
 
                 OnMouseUp?.Invoke(i);
-
-                //Debug.Log("mouse " + i + " Up");
             }
             if (Input.GetMouseButton(i))
             {
                 currentMouseGridNode?.OnMouseHeld(i);
 
                 OnMouseHeld?.Invoke(i);
-
-                //Debug.Log("mouse " + i + " Held");
             }
         }
     }

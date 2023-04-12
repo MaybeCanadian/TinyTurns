@@ -8,10 +8,13 @@ public class GridNode
 {
     #region Event Dispatchers
     public delegate void GridNodeEvent(GridNode node);
-    public static GridNodeEvent OnNodeClicked;
-    public static GridNodeEvent OnNodeOver;
-    #endregion
+    public static GridNodeEvent OnGridNodeEnter;
+    public static GridNodeEvent OnGridNodeExit;
+    public static GridNodeEvent OnGridNodeOver;
 
+    public delegate void GridNodeMouseEvent(GridNode node, int button);
+    public static GridNodeMouseEvent OnGridNodeClicked;
+    #endregion
     private Vector3 worldPos;
     private Vector2Int gridPos;
     bool walkable = true;
@@ -161,7 +164,9 @@ public class GridNode
             obj.OnMouseDown(button);
         }
 
-        OnNodeClicked?.Invoke(this);
+        Debug.Log("down");
+
+        OnGridNodeClicked?.Invoke(this, button);
     }
     public void OnMouseUp(int button)
     {
@@ -188,7 +193,7 @@ public class GridNode
             obj.OnMouseEnter();
         }
 
-        OnNodeOver?.Invoke(this);
+        OnGridNodeEnter?.Invoke(this);
     }
     public void OnMouseExit()
     {
@@ -196,6 +201,8 @@ public class GridNode
         {
             obj.OnMouseExit();
         }
+
+        OnGridNodeExit?.Invoke(this);
     }
     public void OnMouseOver()
     {
@@ -203,6 +210,8 @@ public class GridNode
         {
             obj.OnMouseOver();
         }
+
+        OnGridNodeOver?.Invoke(this);
     }
     #endregion
 

@@ -2,55 +2,102 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class PlayerObject : PathfindingObject
 {
-    public static SelectedNodeIndicator movementSelector = null;
+    #region Event Dispatchers
+    public delegate void PlayerPossesionEvent();
+    public PlayerPossesionEvent OnPlayerPossesed;
+    public PlayerPossesionEvent OnPlayerRePossesed;
+    public PlayerPossesionEvent OnPlayerUnPossesed;
+    #endregion
+
+    [Header("Visuals")]
+    public SelectedNodeIndicator movementSelector = null;
+
+    [Header("Possesion")]
+    public PlayerController controller = null;
+    public bool ableToBePossed = true;
+
+    #region Init Functions
     public PlayerObject(PlayerObjectData data) : base(data)
     {
         movementSelector = new SelectedNodeIndicator(null);
+    }
+    protected override void ConnectEvents()
+    {
+        base.ConnectEvents();
+    }
+    protected override void DisconnectEvents()
+    {
+        base.DisconnectEvents();
     }
     protected override void SetUpObject()
     {
         objType = ObjectTypeFilters.Player;
     }
-    private void MoveMovementIndicator(GridNode newNode)
+    #endregion
+
+    #region Possesion
+    public bool TryPosse(PlayerController inputController)
     {
-        if (movementSelector != null)
+        if(controller == inputController)
         {
-            if (newNode != null)
+            Debug.Log("already possesed by this controller.");
+            return false;
+        }
+
+        if(ableToBePossed)
+        {
+            if(controller != null)
             {
-                movementSelector.PlaceObjectAtGridPos(newNode.GetGridPos());
+                controller.ActivePlayerStopPosse();
+                OnPlayerRePossesed?.Invoke();
 
-                movementSelector.CreateVisuals();
+                controller = inputController;
+
+                return true;
             }
-            else
-            {
-                movementSelector.DestroyVisuals();
-            }
+
+            controller = inputController;
+
+            OnPlayerPossesed?.Invoke();
+            return true;
         }
+
+        return false;
     }
-    public void CreateMovementIndicatorVisuals()
+    public void UnPosse()
     {
-        if (movementSelector == null)
-        {
-            Debug.LogError("ERROR - Could not create movement indicator visuals as the node selector is null.");
-            return;
-        }
+        controller = null;
 
-        movementSelector.CreateVisuals();
+        OnPlayerUnPossesed?.Invoke();
     }
-    public void DestroyMovementIndicatorVisuals()
+    #endregion
+
+    #region EventReceievers
+
+    #region LifeCycle
+    public override void DestroyObject()
     {
-        if (movementSelector == null)
+        base.DestroyObject();
+
+        if(controller != null)
         {
-            Debug.LogError("ERROR - Could not destroy movement indicator visuals as the node selector is null.");
-            return;
+            controller.ActivePlayerStopPosse();
+
+            OnPlayerUnPossesed?.Invoke();
         }
 
-        movementSelector.DestroyVisuals();
-    }
+        controller = null;
 
-    #region Input Recieveing
+
+    }
+    #endregion
+
+    #endregion
+
+    #region Node Input Receivers
     protected void OnMouseButtonDown()
     {
 
