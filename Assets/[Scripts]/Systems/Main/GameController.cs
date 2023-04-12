@@ -42,6 +42,8 @@ public class GameController : MonoBehaviour
         EntityModelDataBase.OutSideInit();
 
         InputController.OutSideInit();
+
+        PlayerController.OutSideInit();
     }
     private void Start()
     {

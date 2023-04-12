@@ -6,6 +6,12 @@ using UnityEngine;
 [System.Serializable]
 public class GridNode
 {
+    #region Event Dispatchers
+    public delegate void GridNodeEvent(GridNode node);
+    public static GridNodeEvent OnNodeClicked;
+    public static GridNodeEvent OnNodeOver;
+    #endregion
+
     private Vector3 worldPos;
     private Vector2Int gridPos;
     bool walkable = true;
@@ -146,6 +152,7 @@ public class GridNode
     #endregion
 
     #region Input
+
     #region Mouse Inputs
     public void OnMouseDown(int button)
     {
@@ -153,6 +160,8 @@ public class GridNode
         {
             obj.OnMouseDown(button);
         }
+
+        OnNodeClicked?.Invoke(this);
     }
     public void OnMouseUp(int button)
     {
@@ -178,6 +187,8 @@ public class GridNode
         {
             obj.OnMouseEnter();
         }
+
+        OnNodeOver?.Invoke(this);
     }
     public void OnMouseExit()
     {
@@ -194,6 +205,7 @@ public class GridNode
         }
     }
     #endregion
+
     #endregion
 }
 
