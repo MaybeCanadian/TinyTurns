@@ -22,6 +22,9 @@ public class GameController : MonoBehaviour
     [Header("Controllers")]
     public PlayerController controller = null;
 
+    [Header("Camera")]
+    public PanSettings panSettings;
+
     private PathfindingObject testObject = null;
 
     #region Init Functions
@@ -61,6 +64,8 @@ public class GameController : MonoBehaviour
         }
 
         controller = new PlayerController();
+
+        MainCameraController.SetPanSettings(panSettings);
     }
     #endregion
 
