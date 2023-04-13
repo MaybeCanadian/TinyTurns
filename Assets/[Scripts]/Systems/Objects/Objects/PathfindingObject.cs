@@ -49,10 +49,8 @@ public class PathfindingObject : Object
     #endregion
 
     #region Pathing Functions
-    public void PathToGridPosition(Vector2Int targetPos)
+    public void PathToGridPosition(GridNode targetNode)
     {
-        GridNode targetNode = GridManager.GetGridNode(targetPos.x, targetPos.y);
-
         if (targetNode == null)
         {
             Debug.LogError("ERROR - Could not path to given position as that node is null.");
@@ -70,10 +68,16 @@ public class PathfindingObject : Object
         GetNextRoutePoint();
         lerpTimer = 0.0f;
 
-        if(anims != null)
+        if (anims != null)
         {
             anims.SetInteger("AnimState", (int)PathfindingAnimStates.WALKING);
         }
+    }
+    public void PathToGridPosition(Vector2Int targetPos)
+    {
+        GridNode targetNode = GridManager.GetGridNode(targetPos.x, targetPos.y);
+
+        PathToGridPosition(targetNode);
     }
     protected void FollowCurrentRoute(float fixedDelta)
     {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController
@@ -38,7 +39,18 @@ public class PlayerController
     #region Event Receivers
     private void OnMouseDown(int button)
     {
+        if(button == 0)
+        {
 
+        }
+        else if(button == 1)
+        {
+            UnPossePlayer();
+        }
+        else
+        {
+
+        }
     }
     private void OnMouseUp(int button)
     {
@@ -50,21 +62,30 @@ public class PlayerController
     }
     private void OnGridNodeMouseDown(GridNode node, int button)
     {
-        Debug.Log("player controller");
-
         if(button == 0)
         {
-            if (activePlayer == null)
-            {
-                List<Object> objs = node.GetObjectsOnNode();
-
-                AttempPosse(objs);
-            }
+            HandleNodeClickedMainMouse(node);
         }
     }
     #endregion
 
     #region Input Handling
+    private void HandleNodeClickedMainMouse(GridNode node)
+    {
+        if (activePlayer == null)
+        {
+            List<Object> objs = node.GetObjectsOnNode();
+
+            AttempPosse(objs);
+
+            return;
+        }
+
+        if(activePlayer.currentGridNode != node)
+        {
+            activePlayer.PathToGridPosition(node);
+        }
+    }
 
     #endregion
 
@@ -81,12 +102,21 @@ public class PlayerController
                     {
                         activePlayer = obj as PlayerObject;
 
-                        Debug.Log("possesed");
+                        //Debug.Log("possesed");
 
                         return;
                     }
                 }
             }
+        }
+    }
+    private void UnPossePlayer()
+    {
+        if(activePlayer != null)
+        {
+            activePlayer.UnPosse();
+
+            activePlayer = null;
         }
     }
     public void ActivePlayerStopPosse()
