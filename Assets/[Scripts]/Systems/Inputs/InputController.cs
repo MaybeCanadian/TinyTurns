@@ -9,19 +9,18 @@ using UnityEngine.InputSystem.LowLevel;
 public static class InputController
 {
     #region Evetnt Dispatchers
+
+    #region Mouse
     public delegate void MousePositionEvent();
     public static MousePositionEvent OnMouseWorldChanged;
     public static MousePositionEvent OnMouseGridChanged;
-
-    public delegate void MouseMoveEvent(GridNode node);
-    public static MouseMoveEvent OnMouseEnter;
-    public static MouseMoveEvent OnMouseExit;
-    public static MouseMoveEvent OnMouseOver;
 
     public delegate void MouseButtonEvent(int button);
     public static MouseButtonEvent OnMouseDown;
     public static MouseButtonEvent OnMouseHeld;
     public static MouseButtonEvent OnMouseUp;
+    #endregion
+
     #endregion
 
     public static Vector3 currentMouseWorldPos = Vector3.zero;
@@ -95,7 +94,6 @@ public static class InputController
     private static void MousePosCheck()
     {
         Vector2 mousePos = Input.mousePosition;
-
         Vector3 newMouseWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
 
         if (GridManager.GetGridPosFromWorldPos(newMouseWorldPos, out Vector2Int newGridPos))
@@ -112,9 +110,7 @@ public static class InputController
                 }
                 else
                 {
-                    currentMouseGridNode.OnMouseOver();
-
-                    OnMouseOver?.Invoke(currentMouseGridNode);
+                    currentMouseGridNode.OnMouseStay();
                 }
             }
         }
@@ -178,8 +174,6 @@ public static class InputController
         if(currentMouseGridNode != null)
         {
             currentMouseGridNode.OnMouseExit();
-
-            OnMouseExit?.Invoke(currentMouseGridNode);
         }
 
         currentMouseGridNode = newNode;
@@ -187,8 +181,6 @@ public static class InputController
         if(currentMouseGridNode != null)
         {
             currentMouseGridNode.OnMouseEnter();
-
-            OnMouseEnter?.Invoke(currentMouseGridNode);
         }
 
         OnMouseGridChanged?.Invoke();

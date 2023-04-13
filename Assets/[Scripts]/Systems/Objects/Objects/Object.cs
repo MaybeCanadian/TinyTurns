@@ -223,7 +223,7 @@ public class Object
     {
 
     }
-    public virtual void OnMouseOver()
+    public virtual void OnMouseStay()
     {
 
     }

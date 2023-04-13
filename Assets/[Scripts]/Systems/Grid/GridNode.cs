@@ -8,13 +8,16 @@ public class GridNode
 {
     #region Event Dispatchers
     public delegate void GridNodeEvent(GridNode node);
-    public static GridNodeEvent OnGridNodeEnter;
-    public static GridNodeEvent OnGridNodeExit;
-    public static GridNodeEvent OnGridNodeOver;
+    public static GridNodeEvent OnNodeEnter;
+    public static GridNodeEvent OnNodeExit;
+    public static GridNodeEvent OnNodeStay;
 
     public delegate void GridNodeMouseEvent(GridNode node, int button);
-    public static GridNodeMouseEvent OnGridNodeClicked;
+    public static GridNodeMouseEvent OnNodeMouseDown;
+    public static GridNodeMouseEvent OnNodeMouseUp;
+    public static GridNodeMouseEvent OnNodeMouseHold;
     #endregion
+
     private Vector3 worldPos;
     private Vector2Int gridPos;
     bool walkable = true;
@@ -164,9 +167,7 @@ public class GridNode
             obj.OnMouseDown(button);
         }
 
-        Debug.Log("down");
-
-        OnGridNodeClicked?.Invoke(this, button);
+        OnNodeMouseDown?.Invoke(this, button);
     }
     public void OnMouseUp(int button)
     {
@@ -174,6 +175,8 @@ public class GridNode
         {
             obj.OnMouseUp(button);
         }
+
+        OnNodeMouseUp?.Invoke(this, button);
     }
     public void OnMouseHeld(int button)
     {
@@ -182,6 +185,7 @@ public class GridNode
             obj.OnMouseHeld(button);
         }
 
+        OnNodeMouseHold?.Invoke(this, button);
     }
     #endregion
 
@@ -193,7 +197,7 @@ public class GridNode
             obj.OnMouseEnter();
         }
 
-        OnGridNodeEnter?.Invoke(this);
+        OnNodeEnter?.Invoke(this);
     }
     public void OnMouseExit()
     {
@@ -202,16 +206,16 @@ public class GridNode
             obj.OnMouseExit();
         }
 
-        OnGridNodeExit?.Invoke(this);
+        OnNodeExit?.Invoke(this);
     }
-    public void OnMouseOver()
+    public void OnMouseStay()
     {
         foreach (Object obj in objectsOnNode)
         {
-            obj.OnMouseOver();
+            obj.OnMouseStay();
         }
 
-        OnGridNodeOver?.Invoke(this);
+        OnNodeStay?.Invoke(this);
     }
     #endregion
 

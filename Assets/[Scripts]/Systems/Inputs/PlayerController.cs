@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
 public class PlayerController
 {
     public GameObject controllerCameraFocus = null;
@@ -11,19 +10,20 @@ public class PlayerController
     #region Init Functions
     public PlayerController()
     {
+        Debug.Log("test");
+
         ConnectEvents();
     }
-    ~PlayerController()
-    {
-        DisconnectEvents();
-    }
+
     private void ConnectEvents()
     {
+        Debug.Log("Events Connected");
+
         InputController.OnMouseDown += OnMouseDown;
         InputController.OnMouseUp += OnMouseUp;
         InputController.OnMouseHeld += OnMouseHeld;
 
-        GridNode.OnGridNodeClicked += OnGridNodeClicked;
+        GridNode.OnNodeMouseDown += OnGridNodeMouseDown;
     }
     private void DisconnectEvents()
     {
@@ -31,7 +31,7 @@ public class PlayerController
         InputController.OnMouseUp -= OnMouseUp;
         InputController.OnMouseHeld -= OnMouseHeld;
 
-        GridNode.OnGridNodeClicked -= OnGridNodeClicked;
+        GridNode.OnNodeMouseDown -= OnGridNodeMouseDown;
     }
     #endregion
 
@@ -48,8 +48,10 @@ public class PlayerController
     {
 
     }
-    private void OnGridNodeClicked(GridNode node, int button)
+    private void OnGridNodeMouseDown(GridNode node, int button)
     {
+        Debug.Log("player controller");
+
         if(button == 0)
         {
             if (activePlayer == null)
