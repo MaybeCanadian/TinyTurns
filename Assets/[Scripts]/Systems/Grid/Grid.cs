@@ -180,6 +180,23 @@ public class Grid
 
         return true;
     }
+    public GridNode FindGridNodeFromWorldPos(Vector3 worldPos)
+    {
+        float x = (worldPos.x - bounds.xMin) / bounds.tileSize.x;
+        float y = (worldPos.y - bounds.yMin) / bounds.tileSize.y;
+
+        Vector2Int gridPos = Vector2Int.zero;
+
+        gridPos.x = (int)x;
+        gridPos.y = (int)y;
+
+        if (gridPos.x < 0 || gridPos.x > gridLength - 1 || gridPos.y < 0 || gridPos.y > gridHeight - 1)
+        {
+            return null;
+        }
+
+        return nodes[gridPos.x, gridPos.y];
+    }
     public Vector2Int GetRandomWalkableLocationOnGrid(int maxTries = 10)
     {
         int tryCount = 0;

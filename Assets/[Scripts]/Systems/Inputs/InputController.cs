@@ -12,8 +12,10 @@ public static class InputController
 
     #region Mouse
     public delegate void MousePositionEvent();
-    public static MousePositionEvent OnMouseWorldChanged;
-    public static MousePositionEvent OnMouseGridChanged;
+    public static MousePositionEvent OnMouseScreenPosChanged;
+    public static MousePositionEvent OnMouseWorldPosChanged;
+    public static MousePositionEvent OnMouseGridPosChanged;
+    public static MousePositionEvent OnMouseViewPortPosChanged;
 
     public delegate void MouseButtonEvent(int button);
     public static MouseButtonEvent OnMouseDown;
@@ -21,10 +23,20 @@ public static class InputController
     public static MouseButtonEvent OnMouseUp;
     #endregion
 
+    #region Actions
+    public delegate void ButtonEvents(InputAction<bool> context);
+    public static ButtonEvents OnCameraCenterButtonPressed;
+
+    public delegate void ActionEvents(InputAction<Vector2> context);
+    public static ActionEvents OnCameraMoveAction;
     #endregion
 
-    public static Vector3 currentMouseWorldPos = Vector3.zero;
-    public static GridNode currentMouseGridNode = null;
+    #endregion
+
+    public static Vector2 mouseScreenPos = Vector2.zero;
+    public static Vector3 mouseWorldPos = Vector3.zero;
+    public static Vector2 mouseViewPortPos = Vector2.zero;
+    public static GridNode MouseGridNode = null;
 
     static bool inited = false;
 
@@ -74,8 +86,7 @@ public static class InputController
 
         if (Input.mousePresent)
         {
-            MousePosCheck();
-            MouseInputCheck();
+            HandleMouse();
         }
 
         GetButtonInputs();
@@ -87,70 +98,108 @@ public static class InputController
     private static void LateUpdate(float delta)
     {
 
-    } 
+    }
+    #endregion
+
+    #region Mouse
+    private static void HandleMouse()
+    {
+        MousePosCheck();
+        MouseInputCheck();
+    }
+
+    #region Position
+    private static void MousePosCheck()
+    {
+        CheckMouseScreenPos();
+
+        CheckMouseWorldPos();
+
+        CheckMouseGridPos();
+
+        CheckMouseViewPortPos();
+    }
+    private static void CheckMouseScreenPos()
+    {
+        Vector2 screenPos = Input.mousePosition;
+        
+        if(screenPos != mouseScreenPos)
+        {
+            mouseScreenPos = screenPos;
+
+            OnMouseScreenPosChanged?.Invoke();
+        }
+    }
+    private static void CheckMouseWorldPos()
+    {
+        Vector3 worldPos = mainCamera.ScreenToWorldPoint(mouseScreenPos);
+
+        if(worldPos != mouseWorldPos)
+        {
+            OnMouseWorldPosChanged?.Invoke();
+        }
+    }
+    private static void CheckMouseGridPos()
+    {
+        GridNode newNode = GridManager.GetGridNodeFromWorldPos(mouseWorldPos);
+
+        if(newNode == MouseGridNode)
+        {
+            if(MouseGridNode != null)
+            {
+                MouseGridNode.OnMouseStay();
+            }
+
+            return;
+        }
+        
+        ChangeCurrentGridNode(newNode);
+        return;
+    }
+    private static void CheckMouseViewPortPos()
+    {
+        Vector2 viewPortPos = mainCamera.ScreenToViewportPoint(mouseScreenPos);
+
+        if(viewPortPos != mouseViewPortPos)
+        {
+
+        }
+    }
     #endregion
 
     #region Input
-    private static void MousePosCheck()
-    {
-        Vector2 mousePos = Input.mousePosition;
-        Vector3 newMouseWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
-
-        if (GridManager.GetGridPosFromWorldPos(newMouseWorldPos, out Vector2Int newGridPos))
-        {
-            if(currentMouseGridNode == null)
-            {
-                ChangeCurrentGridNode(GridManager.GetGridNode(newGridPos.x, newGridPos.y));
-            }
-            else
-            {
-                if(currentMouseGridNode.GetGridPos() != newGridPos)
-                {
-                    ChangeCurrentGridNode(GridManager.GetGridNode(newGridPos.x, newGridPos.y));
-                }
-                else
-                {
-                    currentMouseGridNode.OnMouseStay();
-                }
-            }
-        }
-        else
-        {
-            ChangeCurrentGridNode(null);
-        }
-
-        if(newMouseWorldPos != currentMouseWorldPos)
-        {
-            ChangeCurrentWorldPos(newMouseWorldPos);
-        }
-    }
     private static void MouseInputCheck()
     {
         for (int i = 0; i < 3; i++)
         {
             if (Input.GetMouseButtonDown(i))
             {
-                currentMouseGridNode?.OnMouseDown(i);
+                MouseGridNode?.OnMouseDown(i);
 
                 OnMouseDown?.Invoke(i);
             }
             if (Input.GetMouseButtonUp(i))
             {
-                currentMouseGridNode?.OnMouseUp(i);
+                MouseGridNode?.OnMouseUp(i);
 
                 OnMouseUp?.Invoke(i);
             }
             if (Input.GetMouseButton(i))
             {
-                currentMouseGridNode?.OnMouseHeld(i);
+                MouseGridNode?.OnMouseHeld(i);
 
                 OnMouseHeld?.Invoke(i);
             }
         }
     }
+    #endregion
+
+    #endregion
+
+    #region Input
     private static void GetButtonInputs()
     {
-
+        
     }
     private static bool GetCamera()
     {
@@ -171,25 +220,19 @@ public static class InputController
     #region Node Functions
     private static void ChangeCurrentGridNode(GridNode newNode)
     {
-        if(currentMouseGridNode != null)
+        if(MouseGridNode != null)
         {
-            currentMouseGridNode.OnMouseExit();
+            MouseGridNode.OnMouseExit();
         }
 
-        currentMouseGridNode = newNode;
+        MouseGridNode = newNode;
 
-        if(currentMouseGridNode != null)
+        if(MouseGridNode != null)
         {
-            currentMouseGridNode.OnMouseEnter();
+            MouseGridNode.OnMouseEnter();
         }
 
-        OnMouseGridChanged?.Invoke();
-    }
-    private static void ChangeCurrentWorldPos(Vector3 newPos)
-    {
-        currentMouseWorldPos = newPos;
-
-        OnMouseWorldChanged?.Invoke();
+        OnMouseGridPosChanged?.Invoke();
     }
     #endregion
 

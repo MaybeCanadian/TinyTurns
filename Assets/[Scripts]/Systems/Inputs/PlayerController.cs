@@ -110,7 +110,6 @@ public class PlayerController
             movementSelector.FollowCursor();
         }
     }
-
     #endregion
 
     #region Possesing
