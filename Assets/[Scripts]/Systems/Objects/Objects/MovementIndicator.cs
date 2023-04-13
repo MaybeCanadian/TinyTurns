@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovementIndicator : Object
+public class MovementIndicator : UIObject
 {
-    public MovementIndicator() : base(null)
+    private bool followingMouseCursor = false;
+
+    public MovementIndicator() : base(UIObjectType.MovementIndicator)
     {
-        entityID = EntityList.Movement;
-        objectName = "movement indicator";
     }
     protected override void SetUpObject()
     {
@@ -23,10 +23,22 @@ public class MovementIndicator : Object
     }
     public void FollowCursor()
     {
+        if(followingMouseCursor == true)
+        {
+            return;
+        }
+
+        followingMouseCursor = true;
         GridNode.OnNodeEnter += OnNodeEnter;
     }
     public void StopFollowingCursor()
     {
+        if(followingMouseCursor == false)
+        {
+            return;
+        }
+
+        followingMouseCursor = false;
         GridNode.OnNodeEnter -= OnNodeEnter;
     }
 

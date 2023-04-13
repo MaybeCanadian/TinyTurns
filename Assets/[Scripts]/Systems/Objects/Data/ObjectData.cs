@@ -5,7 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Object", menuName = "Objects/Object")]
 public class ObjectData : ScriptableObject
 {
+    [Header("Superficial name of the object")]
     public string ObjectName = "Name";
 
+    [Tooltip("The model to be shown for this object")]
     public EntityList entityModel = EntityList.NULL;
+
+    [Tooltip("Can other objects path through this object?")]
+    public bool solid = false;
 }

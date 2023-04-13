@@ -14,7 +14,6 @@ public class Object
     public Vector3 worldPos = Vector3.zero;
     public Vector2Int gridPos = Vector2Int.zero;
     public ObjectTypeFilters objType = ObjectTypeFilters.None;
-
     protected int direction = 1;
 
     public GridNode currentGridNode = null;

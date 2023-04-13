@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2737308218158025620}
   - component: {fileID: 3077103972254354098}
   m_Layer: 0
-  m_Name: Movement
+  m_Name: MovementIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

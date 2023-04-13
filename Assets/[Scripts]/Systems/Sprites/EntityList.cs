@@ -7,5 +7,6 @@ public enum EntityList
     NULL,
     HeroOrange,
     HeroBlue,
-    Movement
+    MovementIndicator,
+    MovementPath
 }
