@@ -65,21 +65,33 @@ public class GameController : MonoBehaviour
     #region Update Functions
     private void Update()
     {
-        InputController.Update(Time.deltaTime);
+        float delta = Time.deltaTime;
 
-        OnUpdate?.Invoke(Time.deltaTime);
+        InputController.Update(delta);
+
+        OnUpdate?.Invoke(delta);
+
+        MainCameraController.Update(delta);
     }
     private void FixedUpdate()
     {
-        InputController.FixedUpdate(Time.fixedDeltaTime);
+        float fixedDelta = Time.fixedDeltaTime;
 
-        OnFixedUpdate?.Invoke(Time.fixedDeltaTime);
+        InputController.FixedUpdate(fixedDelta);
+
+        OnFixedUpdate?.Invoke(fixedDelta);
+
+        MainCameraController.FixedUpdate(fixedDelta);
     }
     private void LateUpdate()
     {
-        InputController.LateUpdate(Time.deltaTime);
+        float delta = Time.deltaTime;
 
-        OnLateUpdate?.Invoke(Time.deltaTime);
+        InputController.LateUpdate(delta);
+
+        OnLateUpdate?.Invoke(delta);
+
+        MainCameraController.LateUpdate(delta);
     }
     #endregion
 

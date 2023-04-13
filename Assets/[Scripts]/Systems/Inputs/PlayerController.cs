@@ -92,10 +92,11 @@ public class PlayerController
     #region Input Handling
     private void HandleNodeClickedMainMouse(GridNode node)
     {
+        //ebug.Log(node.GetGridPos());
         if (activePlayer == null)
         {
             List<Object> objs = node.GetObjectsOnNode();
-
+            //Debug.Log(objs.Count);
             AttempPosse(objs);
 
             return;
@@ -117,6 +118,7 @@ public class PlayerController
     {
         foreach(Object obj in objs)
         {
+            Debug.Log("Player");
             if(obj.objType == ObjectTypeFilters.Player)
             {
                 if(obj is PlayerObject)
@@ -125,7 +127,7 @@ public class PlayerController
                     {
                         activePlayer = obj as PlayerObject;
 
-                        //Debug.Log("possesed");
+                        Debug.Log("possesed");
 
                         return;
                     }

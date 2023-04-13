@@ -20,6 +20,6 @@ public class Tester : MonoBehaviour
 
     private void OnNodeDown(GridNode node, int button)
     {
-        Debug.Log("test");
+        //Debug.Log("test");
     }
 }

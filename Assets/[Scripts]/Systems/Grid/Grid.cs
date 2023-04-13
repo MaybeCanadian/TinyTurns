@@ -182,6 +182,8 @@ public class Grid
     }
     public GridNode FindGridNodeFromWorldPos(Vector3 worldPos)
     {
+        //Debug.Log(worldPos);
+
         float x = (worldPos.x - bounds.xMin) / bounds.tileSize.x;
         float y = (worldPos.y - bounds.yMin) / bounds.tileSize.y;
 

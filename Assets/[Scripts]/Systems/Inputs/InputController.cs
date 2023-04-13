@@ -59,20 +59,6 @@ public static class InputController
         inited = true;
 
         GetCamera();
-
-        //ConnectEvents();
-    }
-    private static void ConnectEvents()
-    {
-        //GameController.OnUpdate += Update;
-        //GameController.OnFixedUpdate += FixedUpdate;
-        //GameController.OnLateUpdate += LateUpdate;
-    }
-    private static void DisconnectEvents()
-    {
-        //GameController.OnUpdate -= Update;
-        //GameController.OnFixedUpdate -= FixedUpdate;
-        //GameController.OnLateUpdate -= LateUpdate;
     }
     #endregion
 
@@ -136,6 +122,8 @@ public static class InputController
 
         if(worldPos != mouseWorldPos)
         {
+            mouseWorldPos = worldPos;
+
             OnMouseWorldPosChanged?.Invoke();
         }
     }
@@ -162,7 +150,9 @@ public static class InputController
 
         if(viewPortPos != mouseViewPortPos)
         {
+            mouseViewPortPos = viewPortPos;
 
+            OnMouseViewPortPosChanged?.Invoke();
         }
     }
     #endregion
@@ -239,8 +229,6 @@ public static class InputController
     #region Lifecycle
     public static void DestroyController()
     {
-        DisconnectEvents();
-
         mainCamera = null;
     }
     #endregion
