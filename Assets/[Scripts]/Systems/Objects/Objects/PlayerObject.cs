@@ -16,10 +16,13 @@ public class PlayerObject : PathfindingObject
     public PlayerController controller = null;
     public bool ableToBePossed = true;
 
+    [Header("Pathing Visuals")]
+    public MovementIndicator movementIndicator = null;
+
     #region Init Functions
     public PlayerObject(PlayerObjectData data) : base(data)
     {
-    }
+        movementIndicator = new MovementIndicator();    }
     protected override void ConnectEvents()
     {
         base.ConnectEvents();
@@ -100,6 +103,33 @@ public class PlayerObject : PathfindingObject
     }
     #endregion
 
-    #region Pathfinding Visuals
+    #region Movement Indicator
+    public void PathToMovementIndicator()
+    {
+        if(movementIndicator != null)
+        {
+            if(movementIndicator.currentGridNode == null)
+            {
+                return;
+            }
+
+            PathToGridPosition(movementIndicator.currentGridNode);
+        }
+    }
+
+    #region Visuals
+    public void ShowMovementIndicator()
+    {
+        movementIndicator.CreateVisuals();
+        movementIndicator.FollowCursor();
+        movementIndicator.PlaceObjectAtGridPos(currentGridNode);
+    }
+    public void RemoveMovementIndicator()
+    {
+        movementIndicator.DestroyVisuals();
+        movementIndicator.StopFollowingCursor();
+    }
+    #endregion
+
     #endregion
 }

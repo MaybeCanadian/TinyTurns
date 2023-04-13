@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectedNodeIndicator : PathfindingObject
+public class MovementIndicator : Object
 {
-    public SelectedNodeIndicator(PathfindingObjectData obj) : base(obj)
+    public MovementIndicator() : base(null)
     {
         entityID = EntityList.Movement;
         objectName = "movement indicator";
