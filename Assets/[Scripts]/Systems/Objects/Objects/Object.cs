@@ -65,20 +65,26 @@ public class Object
     #region Movement
     public void PlaceObjectAtGridPos(Vector2Int gridPos) 
     {
+        GridNode node = GridManager.GetGridNode(gridPos.x, gridPos.y);
+
+        PlaceObjectAtGridPos(node);
+    }
+    public void PlaceObjectAtGridPos(GridNode node)
+    {
         LeaveGridNode();
 
-        this.gridPos = gridPos;
+        currentGridNode = node;
 
-        currentGridNode = GridManager.GetGridNode(gridPos.x, gridPos.y);
+        gridPos = node.GetGridPos();
 
-        if(!GridManager.GetWorldPosFromGridPos(gridPos, out this.worldPos))
+        if (!GridManager.GetWorldPosFromGridPos(gridPos, out this.worldPos))
         {
 
         }
 
         AddToGridNode();
 
-        if(objectOBJ != null)
+        if (objectOBJ != null)
         {
             MoveObjToPosition();
         }

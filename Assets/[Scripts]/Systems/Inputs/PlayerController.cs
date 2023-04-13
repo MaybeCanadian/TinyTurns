@@ -8,10 +8,15 @@ public class PlayerController
     public GameObject controllerCameraFocus = null;
     public PlayerObject activePlayer = null;
 
+    [Header("Visuals")]
+    public SelectedNodeIndicator movementSelector = null;
+
+    public bool currentlyDragging = false;
+
     #region Init Functions
     public PlayerController()
     {
-        Debug.Log("test");
+        movementSelector = new SelectedNodeIndicator(null);
 
         ConnectEvents();
     }
@@ -54,7 +59,22 @@ public class PlayerController
     }
     private void OnMouseUp(int button)
     {
+        if(button == 0)
+        {
+            if(currentlyDragging == true)
+            {
+                movementSelector.StopFollowingCursor();
+                movementSelector.DestroyVisuals();
 
+                if(activePlayer != null)
+                {
+                    if (movementSelector.currentGridNode != null)
+                    {
+                        activePlayer.PathToGridPosition(movementSelector.currentGridNode);
+                    }
+                }
+            }
+        }
     }
     private void OnMouseHeld(int button)
     {
@@ -81,9 +101,13 @@ public class PlayerController
             return;
         }
 
-        if(activePlayer.currentGridNode != node)
+        if(activePlayer.currentGridNode == node)
         {
-            activePlayer.PathToGridPosition(node);
+            currentlyDragging = true;
+
+            movementSelector.CreateVisuals();
+            movementSelector.PlaceObjectAtGridPos(activePlayer.currentGridNode);
+            movementSelector.FollowCursor();
         }
     }
 

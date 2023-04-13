@@ -12,9 +12,6 @@ public class PlayerObject : PathfindingObject
     public PlayerPossesionEvent OnPlayerUnPossesed;
     #endregion
 
-    [Header("Visuals")]
-    public SelectedNodeIndicator movementSelector = null;
-
     [Header("Possesion")]
     public PlayerController controller = null;
     public bool ableToBePossed = true;
@@ -22,7 +19,6 @@ public class PlayerObject : PathfindingObject
     #region Init Functions
     public PlayerObject(PlayerObjectData data) : base(data)
     {
-        movementSelector = new SelectedNodeIndicator(null);
     }
     protected override void ConnectEvents()
     {
@@ -102,5 +98,8 @@ public class PlayerObject : PathfindingObject
     {
 
     }
+    #endregion
+
+    #region Pathfinding Visuals
     #endregion
 }
