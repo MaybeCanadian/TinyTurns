@@ -11,7 +11,7 @@ public class PlayerController
     [Header("Visuals")]
     public SelectedNodeIndicator movementSelector = null;
 
-    public bool currentlyDragging = false;
+    private bool currentlyDragging = false;
 
     #region Init Functions
     public PlayerController()

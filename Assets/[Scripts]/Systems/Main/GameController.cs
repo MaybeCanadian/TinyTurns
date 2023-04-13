@@ -46,6 +46,8 @@ public class GameController : MonoBehaviour
         EntityModelDataBase.OutSideInit();
 
         InputController.OutSideInit();
+
+        MainCameraController.OutSideInit();
     }
     private void Start()
     {

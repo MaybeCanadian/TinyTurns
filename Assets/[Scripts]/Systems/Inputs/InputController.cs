@@ -33,10 +33,10 @@ public static class InputController
 
     #endregion
 
-    public static Vector2 mouseScreenPos = Vector2.zero;
-    public static Vector3 mouseWorldPos = Vector3.zero;
-    public static Vector2 mouseViewPortPos = Vector2.zero;
-    public static GridNode MouseGridNode = null;
+    public static Vector2 mouseScreenPos { get; private set; } = Vector2.zero;
+    public static Vector3 mouseWorldPos { get; private set; } = Vector3.zero;
+    public static Vector2 mouseViewPortPos { get; private set; } = Vector2.zero;
+    public static GridNode MouseGridNode { get; private set; } = null;
 
     static bool inited = false;
 
