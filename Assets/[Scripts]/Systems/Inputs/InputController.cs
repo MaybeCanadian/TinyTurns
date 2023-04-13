@@ -60,24 +60,24 @@ public static class InputController
 
         GetCamera();
 
-        ConnectEvents();
+        //ConnectEvents();
     }
     private static void ConnectEvents()
     {
-        GameController.OnUpdate += Update;
-        GameController.OnFixedUpdate += FixedUpdate;
-        GameController.OnLateUpdate += LateUpdate;
+        //GameController.OnUpdate += Update;
+        //GameController.OnFixedUpdate += FixedUpdate;
+        //GameController.OnLateUpdate += LateUpdate;
     }
     private static void DisconnectEvents()
     {
-        GameController.OnUpdate -= Update;
-        GameController.OnFixedUpdate -= FixedUpdate;
-        GameController.OnLateUpdate -= LateUpdate;
+        //GameController.OnUpdate -= Update;
+        //GameController.OnFixedUpdate -= FixedUpdate;
+        //GameController.OnLateUpdate -= LateUpdate;
     }
     #endregion
 
     #region Update Functions
-    private static void Update(float delta)
+    public static void Update(float delta)
     {
         if(GetCamera() == false)
         {
@@ -91,11 +91,11 @@ public static class InputController
 
         GetButtonInputs();
     }
-    private static void FixedUpdate(float fixedDelta)
+    public static void FixedUpdate(float fixedDelta)
     {
 
     }
-    private static void LateUpdate(float delta)
+    public static void LateUpdate(float delta)
     {
 
     }

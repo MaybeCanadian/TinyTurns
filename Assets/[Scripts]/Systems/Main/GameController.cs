@@ -65,14 +65,20 @@ public class GameController : MonoBehaviour
     #region Update Functions
     private void Update()
     {
+        InputController.Update(Time.deltaTime);
+
         OnUpdate?.Invoke(Time.deltaTime);
     }
     private void FixedUpdate()
     {
+        InputController.FixedUpdate(Time.fixedDeltaTime);
+
         OnFixedUpdate?.Invoke(Time.fixedDeltaTime);
     }
     private void LateUpdate()
     {
+        InputController.LateUpdate(Time.deltaTime);
+
         OnLateUpdate?.Invoke(Time.deltaTime);
     }
     #endregion
