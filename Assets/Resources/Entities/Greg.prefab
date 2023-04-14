@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6490216966920239676}
   - component: {fileID: 7639259947883511759}
   m_Layer: 0
-  m_Name: HeroBlue
+  m_Name: Greg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

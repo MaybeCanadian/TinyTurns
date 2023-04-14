@@ -5,8 +5,6 @@ using UnityEngine;
 public enum EntityList
 {
     NULL,
-    HeroOrange,
-    HeroBlue,
-    MovementIndicator,
-    MovementPath
+    Bobby,
+    Greg
 }

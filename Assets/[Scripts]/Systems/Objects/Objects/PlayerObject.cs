@@ -106,28 +106,28 @@ public class PlayerObject : PathfindingObject
     #region Movement Indicator
     public void PathToMovementIndicator()
     {
-        if(movementIndicator != null)
-        {
-            if(movementIndicator.currentGridNode == null)
-            {
-                return;
-            }
+        //if(movementIndicator != null)
+        //{
+        //    if(movementIndicator.currentGridNode == null)
+        //    {
+        //        return;
+        //    }
 
-            PathToGridPosition(movementIndicator.currentGridNode);
-        }
+        //    PathToGridPosition(movementIndicator.currentGridNode);
+        //}
     }
 
     #region Visuals
     public void ShowMovementIndicator()
     {
-        movementIndicator.CreateVisuals();
-        movementIndicator.FollowCursor();
-        movementIndicator.PlaceObjectAtGridPos(currentGridNode);
+        //movementIndicator.CreateVisuals();
+        //movementIndicator.FollowCursor();
+        //movementIndicator.PlaceObjectAtGridPos(currentGridNode);
     }
     public void RemoveMovementIndicator()
     {
-        movementIndicator.DestroyVisuals();
-        movementIndicator.StopFollowingCursor();
+        //movementIndicator.DestroyVisuals();
+        //movementIndicator.StopFollowingCursor();
     }
     #endregion
 
