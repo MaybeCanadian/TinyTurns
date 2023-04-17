@@ -106,15 +106,25 @@ public class PlayerObject : PathfindingObject
     #region Movement Indicator
     public void PathToMovementIndicator()
     {
-        //if(movementIndicator != null)
-        //{
-        //    if(movementIndicator.currentGridNode == null)
-        //    {
-        //        return;
-        //    }
+        if (movementIndicator != null)
+        {
+            if (movementIndicator.currentGridNode == null)
+            {
+                return;
+            }
 
-        //    PathToGridPosition(movementIndicator.currentGridNode);
-        //}
+            ableToBePossed = false;
+            PathToGridPosition(movementIndicator.currentGridNode);
+        }
+    }
+    public void MovementIndicatorStopFollowCursor()
+    {
+        if(movementIndicator == null)
+        {
+            return;
+        }
+
+        movementIndicator.StopFollowCursor();
     }
 
     #region Visuals
@@ -127,10 +137,24 @@ public class PlayerObject : PathfindingObject
     }
     public void RemoveMovementIndicator()
     {
-        //movementIndicator.DestroyVisuals();
-        //movementIndicator.StopFollowingCursor();
+        movementIndicator.DestroyVisuals();
+        movementIndicator.RemoveTrail();
     }
     #endregion
 
+    #endregion
+
+    #region Overrides
+    protected override void PathfindingFinished()
+    {
+        base.PathfindingFinished();
+
+        if (movementIndicator != null)
+        {
+            ableToBePossed = true;
+            movementIndicator.StopFollowCursor();
+            RemoveMovementIndicator();
+        }
+    }
     #endregion
 }

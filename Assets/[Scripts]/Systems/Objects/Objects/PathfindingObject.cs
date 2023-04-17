@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class PathfindingObject : Object
 {
+    #region Event Dispatchers
+    public delegate void PathfindingEvent();
+    public PathfindingEvent OnPathFindingStarted;
+    public PathfindingEvent OnPathFindingFinished;
+    #endregion
+
     protected PathRoute currentRoute = null;
     protected GridNode currentTargetNode = null;
     protected int currentRouteIndex = -1;
@@ -117,7 +123,8 @@ public class PathfindingObject : Object
             {
                 anims.SetInteger("AnimState", (int)PathfindingAnimStates.IDLE);
             }
-            //Debug.Log("Arrived");
+
+            PathfindingFinished();
             return;
         }
 
@@ -148,6 +155,10 @@ public class PathfindingObject : Object
 
             PathToGridPosition(grid.GetRandomWalkableLocationOnGrid());
         }
+    }
+    protected virtual void PathfindingFinished()
+    {
+        OnPathFindingFinished?.Invoke();
     }
     #endregion
 

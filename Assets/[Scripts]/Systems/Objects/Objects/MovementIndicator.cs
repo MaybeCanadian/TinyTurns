@@ -26,6 +26,11 @@ public class MovementIndicator : UIObject
         this.onNodes = onNodes;
         this.trailUI = trailUI;
     }
+    public void RemoveTrail()
+    {
+        showTrail = false;
+        RemoveOldTrail();
+    }
     protected override void HandleFollowCursorMove()
     {
         base.HandleFollowCursorMove();
