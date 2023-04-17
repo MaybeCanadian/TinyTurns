@@ -33,6 +33,20 @@ public class UIObject : Object
             followingCursor = false;
         }
     }
+    protected virtual void HandleFollowCursorMove()
+    {
+        currentGridNode = InputController.MouseGridNode;
+
+        if (currentGridNode != null)
+        {
+            PlaceObjectAtGridPos(currentGridNode);
+            CreateVisuals();
+            return;
+        }
+
+        DestroyVisuals();
+        return;
+    }
     #endregion
 
     #region Event Receivers
@@ -40,15 +54,7 @@ public class UIObject : Object
     {
         if(followingCursor == true)
         {
-            if(InputController.MouseGridNode != null)
-            {
-                PlaceObjectAtGridPos(InputController.MouseGridNode);
-                CreateVisuals();
-                return;
-            }
-
-            DestroyVisuals();
-            return;
+           HandleFollowCursorMove();
         }
     }
     #endregion
