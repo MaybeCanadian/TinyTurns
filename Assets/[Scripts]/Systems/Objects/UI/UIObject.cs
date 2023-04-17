@@ -6,6 +6,7 @@ public class UIObject : Object
 {
     UIList ui;
     bool followingCursor = false;
+    Object objAttachedTo = null;
 
     #region Init Functions
     public UIObject(UIList uiType) : base(null)
@@ -41,6 +42,32 @@ public class UIObject : Object
         CreateVisuals();
         return;
     }
+    public void AttachToObject(Object obj)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+
+        objAttachedTo = obj;
+
+        obj.OnObjectWorldPosChanged += OnAttachedOBJWorldPosChanged;
+        obj.OnObjectRemoved += OnAttachedOBJRemoved;
+
+        PlaceObjectAtGridPos(obj.gridPos);
+    }
+    public void RemoveFromObject() 
+    {
+        if (objAttachedTo == null)
+        {
+            return;
+        }
+
+        objAttachedTo.OnObjectWorldPosChanged += OnAttachedOBJWorldPosChanged;
+        objAttachedTo.OnObjectRemoved += OnAttachedOBJRemoved;
+
+        objAttachedTo = null;
+    }
     #endregion
 
     #region Event Receivers
@@ -50,6 +77,20 @@ public class UIObject : Object
         {
            HandleFollowCursorMove();
         }
+    }
+    private void OnAttachedOBJWorldPosChanged()
+    {
+        if(objAttachedTo == null)
+        {
+            return;
+        }
+
+        worldPos = objAttachedTo.worldPos;
+        MoveObjToPosition();
+    }
+    private void OnAttachedOBJRemoved()
+    {
+        RemoveFromObject();
     }
     #endregion
 

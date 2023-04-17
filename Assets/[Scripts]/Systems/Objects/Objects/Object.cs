@@ -9,6 +9,9 @@ public class Object
     public delegate void ObjectEvent();
     public ObjectEvent OnObjectMoved;
     public ObjectEvent OnObjectRemoved;
+
+    public delegate void ObjectMoveEvent();
+    public ObjectMoveEvent OnObjectWorldPosChanged;
     #endregion
 
     public Vector3 worldPos = Vector3.zero;
@@ -76,10 +79,14 @@ public class Object
 
         gridPos = node.GetGridPos();
 
-        if (!GridManager.GetWorldPosFromGridPos(gridPos, out this.worldPos))
+        if (!GridManager.GetWorldPosFromGridPos(gridPos, out Vector3 pos))
         {
 
         }
+
+        worldPos = pos;
+
+        OnObjectWorldPosChanged?.Invoke();
 
         AddToGridNode();
 
@@ -177,6 +184,10 @@ public class Object
         }
 
         CameraFollowScript.SetFollowTarget(objectOBJ.transform);
+    }
+    private void CreateUIVisuals()
+    {
+
     }
     #endregion
 

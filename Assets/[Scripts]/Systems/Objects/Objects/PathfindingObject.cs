@@ -93,6 +93,8 @@ public class PathfindingObject : Object
         {
             worldPos = Vector3.Lerp(currentGridNode.GetWorldPos(), currentTargetNode.GetWorldPos(), lerpTimer);
 
+            OnObjectWorldPosChanged?.Invoke();
+
             MoveObjToPosition();
 
             if (lerpTimer >= 1.0f)

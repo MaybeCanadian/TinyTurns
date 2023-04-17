@@ -1643,7 +1643,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Other_72
+      name: ActivePlayerIndicartor
       rect:
         serializedVersion: 2
         x: 0
@@ -4886,6 +4886,7 @@ TextureImporter:
       Other_92: 530965498
       Other_51: -1930847497
       Other_150: 404161728
+      ActivePlayerIndicartor: -1432703046
       Other_20: 212075557
       Other_43: 1454806239
       Other_66: 1762438950
@@ -4960,8 +4961,8 @@ TextureImporter:
       Other_52: 269650370
       Other_14: 191810101
       Other_87: -1732337261
-      Other_120: -278974546
       Other_183: 1085922055
+      Other_120: -278974546
       Other_217: 1798117206
       Other_175: 149509452
       Other_223: -626547969
@@ -4995,10 +4996,10 @@ TextureImporter:
       Other_196: -167765750
       Other_112: 851109153
       Other_48: 2098075866
-      Other_59: 787929344
-      Other_143: 113426033
-      Other_146: 741780857
       Other_144: 800046333
+      Other_143: 113426033
+      Other_59: 787929344
+      Other_146: 741780857
       Other_4: 1579444381
       Other_46: -883278775
       Other_164: -8004630
@@ -5068,7 +5069,6 @@ TextureImporter:
       Other_80: 1086107968
       Other_75: 2089095497
       Other_163: -1162133936
-      Other_72: -1432703046
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -7,5 +7,6 @@ using UnityEngine;
 public enum UIList
 {
     MovementIndicator,
-    MovementPath
+    MovementPath,
+    ActivePlayer
 }

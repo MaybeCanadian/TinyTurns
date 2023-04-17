@@ -5,14 +5,15 @@ using UnityEngine;
 
 public class PlayerController
 {
-    public GameObject controllerCameraFocus = null;
     public PlayerObject activePlayer = null;
+    public UIObject activePlayerIcon = null;
 
     private bool currentlyDragging = false;
 
     #region Init Functions
     public PlayerController()
     {
+        activePlayerIcon = new UIObject(UIList.ActivePlayer);
         ConnectEvents();
     }
 
@@ -111,9 +112,8 @@ public class PlayerController
                     if((obj as PlayerObject).TryPosse(this))
                     {
                         activePlayer = obj as PlayerObject;
-
-                        Debug.Log("possesed");
-
+                        activePlayerIcon.AttachToObject(activePlayer);
+                        activePlayerIcon.CreateVisuals();
                         return;
                     }
                 }
@@ -124,13 +124,19 @@ public class PlayerController
     {
         if(activePlayer != null)
         {
+            activePlayerIcon.RemoveFromObject();
+            activePlayerIcon.DestroyVisuals();
             activePlayer.UnPosse();
-
             activePlayer = null;
         }
     }
     public void ActivePlayerStopPosse()
     {
+        if (activePlayer != null)
+        {
+            activePlayerIcon.RemoveFromObject();
+            activePlayerIcon.DestroyVisuals();
+        }
         activePlayer = null;
     }
     #endregion
