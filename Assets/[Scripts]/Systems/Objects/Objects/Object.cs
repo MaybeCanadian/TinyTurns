@@ -106,7 +106,7 @@ public class Object
             }
         }
 
-        GameObject model = EntityModelDataBase.GetModel(entityID);
+        GameObject model = GetObjectModel();
 
         if(model == null)
         {
@@ -126,6 +126,10 @@ public class Object
         objectOBJ.name = objectName;
 
         MoveObjToPosition();
+    }
+    protected virtual GameObject GetObjectModel()
+    {
+        return EntityModelDataBase.GetModel(entityID);
     }
     public virtual void DestroyVisuals() 
     {
@@ -187,14 +191,14 @@ public class Object
     #endregion
 
     #region Nodes
-    private void LeaveGridNode()
+    protected virtual void LeaveGridNode()
     {
         if (currentGridNode != null)
         {
             currentGridNode.RemoveObjectFromNode(this);
         }
     }
-    private void AddToGridNode()
+    protected virtual void AddToGridNode()
     {
         if (currentGridNode != null)
         {

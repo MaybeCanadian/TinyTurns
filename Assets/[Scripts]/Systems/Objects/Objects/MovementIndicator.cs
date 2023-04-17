@@ -6,9 +6,10 @@ public class MovementIndicator : UIObject
 {
     //private bool followingMouseCursor = false;
 
-    //public MovementIndicator() : base(UIObjectType.MovementIndicator)
-    //{
-    //}
+    public MovementIndicator() : base(UIList.MovementIndicator)
+    {
+
+    }
     //protected override void SetUpObject()
     //{
     //    objType = ObjectTypeFilters.UI;

@@ -39,7 +39,7 @@ public class PathfindingObject : Object
         }
         else
         {
-            //Wander(fixedDelta);
+            Wander(fixedDelta);
         }
     }
     protected override void LateUpdate(float delta)
