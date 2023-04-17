@@ -37,14 +37,8 @@ public class UIObject : Object
     {
         currentGridNode = InputController.MouseGridNode;
 
-        if (currentGridNode != null)
-        {
-            PlaceObjectAtGridPos(currentGridNode);
-            CreateVisuals();
-            return;
-        }
-
-        DestroyVisuals();
+        PlaceObjectAtGridPos(currentGridNode);
+        CreateVisuals();
         return;
     }
     #endregion

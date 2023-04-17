@@ -53,6 +53,8 @@ public static class MainCameraController
 
         panSettings.minSpeed = new Vector2(1.0f, 1.0f);
         panSettings.maxSpeed = new Vector2(5.0f, 5.0f);
+
+        panSettings.enablePan = true;
     }
     #endregion
 
@@ -67,7 +69,10 @@ public static class MainCameraController
     }
     public static void LateUpdate(float delta)
     {
-        PanCamera(delta);
+        if (panSettings.enablePan == true)
+        {
+            PanCamera(delta);
+        }
     }
     #endregion
 
@@ -277,6 +282,7 @@ public struct PanSettings
     public Vector2 maxSpeed;
 
     public PanMode panMode;
+    public bool enablePan;
 }
 
 [System.Serializable]

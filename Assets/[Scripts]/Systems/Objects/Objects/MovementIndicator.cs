@@ -9,10 +9,12 @@ public class MovementIndicator : UIObject
     UIList trailUI;
     GridNode startNode = null;
 
+    List<UIObject> trailList = null;
+
     #region Init Functions
     public MovementIndicator() : base(UIList.MovementIndicator)
     {
-
+        trailList = new List<UIObject>();
     }
     #endregion
 
@@ -28,14 +30,83 @@ public class MovementIndicator : UIObject
     {
         base.HandleFollowCursorMove();
 
-        if(currentGridNode != null)
+        //Debug.Log("test");
+        if (showTrail == true)
         {
-
+            CreateTrail(startNode, currentGridNode);
         }
-    }
-    private void CreateTrail()
-    {
 
+    }
+    private void CreateTrail(GridNode start, GridNode end)
+    {
+        if (currentGridNode == null || startNode == null)
+        {
+            //RemoveOldTrail();
+            return;
+        }
+
+        if(!PathfindingSystem.FindPathBetweenNodes(start, end, out PathRoute route)) 
+        {
+            RemoveOldTrail();
+            return;
+        }
+
+        TryUtilizeOldPath(route);
+    }
+    private void CreateTrailUIAtGridNode(GridNode node)
+    {
+        UIObject uiOBJ = new UIObject(trailUI);
+
+        uiOBJ.PlaceObjectAtGridPos(node);
+        uiOBJ.CreateVisuals();
+
+        trailList.Add(uiOBJ);
+    }
+    private void RemoveOldTrail()
+    {
+        foreach(UIObject obj in trailList)
+        {
+            obj.DestroyObject();
+        }
+
+        trailList.Clear();
+    }
+    private void TryUtilizeOldPath(PathRoute route)
+    {
+        int trailItt = 0;
+        for(int i = 0; i < route.path.Count; i++)
+        {
+            if(i == 0 || i == route.path.Count - 1)
+            {
+                continue;
+            }
+
+
+            if(trailItt < trailList.Count)
+            {
+                trailList[trailItt].PlaceObjectAtGridPos(route.path[i]);
+                trailList[trailItt].CreateVisuals();
+            }
+            else
+            {
+                CreateTrailUIAtGridNode(route.path[i]);
+            }
+
+            trailItt++;
+        }
+
+        if(trailItt < trailList.Count)
+        {
+            for(int i = trailItt; i < trailList.Count; i++)
+            {
+                trailList[i].DestroyObject();
+            }
+
+            int count = trailList.Count - trailItt - 1;
+            trailList.RemoveRange(trailItt, count);
+        }
+
+        Debug.Log(trailList.Count);
     }
 
     #endregion

@@ -58,8 +58,8 @@ public class PlayerController
         {
             if(currentlyDragging == true)
             {
-                activePlayer.PathToMovementIndicator();
-                activePlayer.RemoveMovementIndicator();
+                //activePlayer.PathToMovementIndicator();
+                //activePlayer.RemoveMovementIndicator();
             }
         }
     }

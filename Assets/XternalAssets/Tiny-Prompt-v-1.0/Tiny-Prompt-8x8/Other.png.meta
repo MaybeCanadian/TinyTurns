@@ -1286,7 +1286,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Other_55
+      name: Red Ball
       rect:
         serializedVersion: 2
         x: 8
@@ -4952,6 +4952,7 @@ TextureImporter:
       Other_58: 797352095
       Other_203: 1528479664
       Other_205: -754909953
+      Red Ball: 1383927928
       Other_16: 156412797
       Other_168: 2116254695
       Other_40: 1379077895
@@ -4959,8 +4960,8 @@ TextureImporter:
       Other_52: 269650370
       Other_14: 191810101
       Other_87: -1732337261
-      Other_183: 1085922055
       Other_120: -278974546
+      Other_183: 1085922055
       Other_217: 1798117206
       Other_175: 149509452
       Other_223: -626547969
@@ -5065,7 +5066,6 @@ TextureImporter:
       Other_119: -1234681577
       Other_138: -371245348
       Other_80: 1086107968
-      Other_55: 1383927928
       Other_75: 2089095497
       Other_163: -1162133936
       Other_72: -1432703046

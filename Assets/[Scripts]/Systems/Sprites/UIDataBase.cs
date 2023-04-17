@@ -27,6 +27,8 @@ public static class UIDataBase
     }
     private static void SetUpDictionary()
     {
+        UIDict = new Dictionary<UIList, GameObject>();
+
         foreach(int uiName in Enum.GetValues(typeof(UIList)))
         {
             GameObject UI = Resources.Load<GameObject>("UI/" + (UIList)uiName);

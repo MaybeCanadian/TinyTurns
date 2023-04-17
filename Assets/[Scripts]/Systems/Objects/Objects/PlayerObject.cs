@@ -120,9 +120,10 @@ public class PlayerObject : PathfindingObject
     #region Visuals
     public void ShowMovementIndicator()
     {
-        //movementIndicator.CreateVisuals();
-        //movementIndicator.FollowCursor();
-        //movementIndicator.PlaceObjectAtGridPos(currentGridNode);
+        movementIndicator.CreateVisuals();
+        movementIndicator.FollowCursor();
+        movementIndicator.PlaceObjectAtGridPos(currentGridNode);
+        movementIndicator.AddTrail(UIList.MovementPath, currentGridNode);
     }
     public void RemoveMovementIndicator()
     {
