@@ -14,18 +14,23 @@ public class Object
     public ObjectMoveEvent OnObjectWorldPosChanged;
     #endregion
 
+    [Header("Position")]
     public Vector3 worldPos = Vector3.zero;
     public Vector2Int gridPos = Vector2Int.zero;
-    public ObjectTypeFilters objType = ObjectTypeFilters.None;
-    protected int direction = 1;
-
     public GridNode currentGridNode = null;
 
-    public ObjectData data = null;
+    [Header("Visuals")]
+    protected int direction = 1;
+    public EntityList entityID = EntityList.NULL;
     public GameObject objectOBJ = null;
 
-    public EntityList entityID = EntityList.NULL;
+    [Header("Data")]
+    public ObjectData data = null;
     public string objectName = "default name";
+    public ObjectTypeFilters objType = ObjectTypeFilters.None;
+
+    //[Header("Pathfinding")]
+    //public 
 
     #region Init Functions
     public Object(ObjectData data)
