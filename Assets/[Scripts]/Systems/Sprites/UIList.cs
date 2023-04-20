@@ -8,5 +8,6 @@ public enum UIList
 {
     MovementIndicator,
     MovementPath,
-    ActivePlayer
+    ActivePlayer,
+    HealthBar
 }

@@ -49,7 +49,7 @@ public class BattlerObject : PathfindingObject
                     {
                         if (resistance.modificationType == ModificationTypes.PERCENT)
                         {
-                            percentModifications.Add(resistance.amount);
+                            percentModifications.AddLast(resistance.amount);
                             continue;
                         }
 
@@ -74,6 +74,8 @@ public class BattlerObject : PathfindingObject
         float oldCurrent = currentHealth;
 
         currentHealth -= amount;
+
+        currentHealth = Mathf.Min(currentHealth, 0.0f);
 
         OnHealthLostUnAdjusted?.Invoke(amount);
         OnHealthLostAdjusted?.Invoke(oldCurrent - currentHealth);
