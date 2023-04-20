@@ -126,8 +126,6 @@ public class MovementIndicator : UIObject
             int count = trailList.Count - trailItt - 1;
             trailList.RemoveRange(trailItt, count);
         }
-
-        Debug.Log(trailList.Count);
     }
 
     #endregion

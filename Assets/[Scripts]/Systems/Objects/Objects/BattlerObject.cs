@@ -11,4 +11,13 @@ public class BattlerObject : PathfindingObject
     {
 
     }
+
+    #region Health
+
+    public void TakeDamage(int amount)
+    {
+
+    }
+
+    #endregion
 }
