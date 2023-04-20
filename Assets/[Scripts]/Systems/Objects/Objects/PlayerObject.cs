@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerObject : PathfindingObject
+public class PlayerObject : BattlerObject
 {
     #region Event Dispatchers
     public delegate void PlayerPossesionEvent();

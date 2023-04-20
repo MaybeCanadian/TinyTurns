@@ -33,14 +33,16 @@ public static class InputController
 
     #endregion
 
+    #region Mouse Positions
     public static Vector2 mouseScreenPos { get; private set; } = Vector2.zero;
     public static Vector3 mouseWorldPos { get; private set; } = Vector3.zero;
     public static Vector2 mouseViewPortPos { get; private set; } = Vector2.zero;
     public static GridNode MouseGridNode { get; private set; } = null;
+    #endregion
 
     static bool inited = false;
 
-    private static Camera mainCamera;
+    private static Camera mainCamera = null;
 
     #region Init Functions
     public static void OutSideInit()
@@ -59,6 +61,10 @@ public static class InputController
         inited = true;
 
         GetCamera();
+    }
+    private static void SetUpAcitons()
+    {
+
     }
     #endregion
 
@@ -249,7 +255,6 @@ public class InputAction<T>
         state = InputStates.UnPressed;
         actionKey = key;
     }
-
     public void CheckInput()
     {
         if(Input.GetKeyDown(actionKey))
