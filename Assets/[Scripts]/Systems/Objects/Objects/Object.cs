@@ -83,6 +83,11 @@ public class Object
 
         currentGridNode = node;
 
+        if(node == null)
+        {
+            return;
+        }
+
         gridPos = node.GetGridPos();
 
         if (!GridManager.GetWorldPosFromGridPos(gridPos, out Vector3 pos))
