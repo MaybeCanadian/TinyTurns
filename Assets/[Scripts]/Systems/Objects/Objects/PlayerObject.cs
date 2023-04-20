@@ -22,7 +22,7 @@ public class PlayerObject : PathfindingObject
     #region Init Functions
     public PlayerObject(PlayerObjectData data) : base(data)
     {
-        movementIndicator = new MovementIndicator();    }
+        movementIndicator = new MovementIndicator(this);    }
     protected override void ConnectEvents()
     {
         base.ConnectEvents();

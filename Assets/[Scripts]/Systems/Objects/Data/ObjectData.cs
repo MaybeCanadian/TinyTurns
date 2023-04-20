@@ -11,6 +11,5 @@ public class ObjectData : ScriptableObject
     [Tooltip("The model to be shown for this object")]
     public EntityList entityModel = EntityList.NULL;
 
-    [Tooltip("Can other objects path through this object?")]
-    public bool solid = false;
+    public ObjectBlockingStruct objectBlocking;
 }

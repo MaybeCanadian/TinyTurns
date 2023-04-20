@@ -11,10 +11,14 @@ public class MovementIndicator : UIObject
 
     List<UIObject> trailList = null;
 
+    PlayerObject connectedPlayer = null;
+
     #region Init Functions
-    public MovementIndicator() : base(UIList.MovementIndicator)
+    public MovementIndicator(PlayerObject player) : base(UIList.MovementIndicator)
     {
         trailList = new List<UIObject>();
+
+        connectedPlayer = player;
     }
     #endregion
 
@@ -50,7 +54,19 @@ public class MovementIndicator : UIObject
             return;
         }
 
-        if(!PathfindingSystem.FindPathBetweenNodes(start, end, out PathRoute route)) 
+        Factions faction = Factions.NONE;
+        bool solid = false;
+
+        if(connectedPlayer != null)
+        {
+            if(connectedPlayer.data != null)
+            {
+                faction = connectedPlayer.data.objectBlocking.faction;
+                solid = connectedPlayer.data.objectBlocking.solid;
+            }
+        }
+
+        if(!PathfindingSystem.FindPathBetweenNodes(start, end, solid, faction, out PathRoute route)) 
         {
             RemoveOldTrail();
             return;

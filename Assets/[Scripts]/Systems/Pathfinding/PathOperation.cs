@@ -17,7 +17,10 @@ public class PathOperation
 
     private bool foundEnd = false;
 
-    public PathOperation(GridNode start, GridNode end)
+    private bool solid;
+    private Factions faction;
+
+    public PathOperation(GridNode start, GridNode end, bool solid, Factions faction)
     {
         openNodes = new List<PathNode>();
         closedNodes = new List<PathNode>();
@@ -25,10 +28,22 @@ public class PathOperation
         startNode = start;
         endNode = end;
 
+        this.solid = solid;
+        this.faction = faction;
+
         frontierNode = null;
         route = null;
 
         foundEnd = false;
+    }
+    private bool ValidateStartAndEndNode()
+    {
+        if(endNode.GetIsStandable(faction) == false)
+        {
+            return false;
+        }
+
+        return true;
     }
     public PathRoute GetRoute()
     {
@@ -36,7 +51,10 @@ public class PathOperation
     }
     public bool StartOperation()
     {
-        //Debug.Log("starting operation");
+        if(ValidateStartAndEndNode() == false)
+        {
+            return false;
+        }
 
         SetUpFirstNode();
 
@@ -50,8 +68,6 @@ public class PathOperation
             }
 
             EvaluateNode(frontierNode);
-
-            //Debug.Log(openNodes.Count);
         }
 
         if (!DetermineRoute())
@@ -63,8 +79,6 @@ public class PathOperation
     }
     private void SetUpFirstNode()
     {
-        //Debug.Log("Setting up start node.");
-
         PathNode startPathNode = new (startNode);
         startPathNode.SetHCost(0);
         startPathNode.SetParentNode(null, 0);
@@ -98,7 +112,7 @@ public class PathOperation
 
         if(frontierNode != null)
         {
-            //Debug.Log("New frontier node is " + frontierNode.GetBaseNode().GetWorldPos());
+            
         }
         else
         {
@@ -142,6 +156,11 @@ public class PathOperation
 
         foreach(GridNode nNode in node.GetBaseNode().GetNeighbours())
         {
+            if(solid == true && nNode.GetIsPathable(faction) == false)
+            {
+                continue;
+            }
+
             PathNode npNode = GetNodeExists(nNode);
 
             if(npNode == null)

@@ -45,7 +45,7 @@ public class PathfindingObject : Object
         }
         else
         {
-            Wander(fixedDelta);
+            //Wander(fixedDelta);
         }
     }
     protected override void LateUpdate(float delta)
@@ -63,7 +63,16 @@ public class PathfindingObject : Object
             return;
         }
 
-        if (!PathfindingSystem.FindPathBetweenNodes(currentGridNode, targetNode, out PathRoute route))
+        Factions faction = Factions.NONE;
+        bool solid = false;
+
+        if (data != null)
+        {
+            faction = data.objectBlocking.faction;
+            solid = data.objectBlocking.solid;
+        }
+
+        if (!PathfindingSystem.FindPathBetweenNodes(currentGridNode, targetNode, solid, faction, out PathRoute route))
         {
             Debug.Log("Could not find a path to the given grid node.");
             return;

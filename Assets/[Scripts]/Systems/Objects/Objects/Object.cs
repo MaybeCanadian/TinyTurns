@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -190,10 +191,6 @@ public class Object
 
         CameraFollowScript.SetFollowTarget(objectOBJ.transform);
     }
-    private void CreateUIVisuals()
-    {
-
-    }
     #endregion
 
     #region Lifecycle
@@ -253,5 +250,56 @@ public class Object
 
     }
     #endregion
+    #endregion
+
+    #region Pathfinding
+    public bool CanPathThrough(Factions faction)
+    {
+        if(data == null)
+        {
+            return true;
+        }
+
+        if(data.objectBlocking.solid == false)
+        {
+            return true;
+        }
+
+        if(data.objectBlocking.allowAnyPathingThrough == true)
+        {
+            return true;
+        }
+
+        if(data.objectBlocking.allowFactionPathingThrough == true && data.objectBlocking.faction == faction)
+        {
+            return true;
+        }
+
+        return false;
+    }
+    public bool CanStandOn(Factions faction)
+    {
+        if (data == null)
+        {
+            return true;
+        }
+
+        if (data.objectBlocking.solid == false)
+        {
+            return true;
+        }
+
+        if (data.objectBlocking.allowAnyStandOn == true)
+        {
+            return true;
+        }
+
+        if (data.objectBlocking.allowFactionStandOn == true && data.objectBlocking.faction == faction)
+        {
+            return true;
+        }
+
+        return false;
+    }
     #endregion
 }

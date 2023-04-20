@@ -4738,6 +4738,7 @@ MonoBehaviour:
     minSpeed: {x: 1, y: 1}
     maxSpeed: {x: 10, y: 10}
     panMode: 0
+    enablePan: 1
 --- !u!4 &197677304
 Transform:
   m_ObjectHideFlags: 0

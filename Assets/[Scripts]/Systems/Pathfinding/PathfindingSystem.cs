@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public static class PathfindingSystem
 {
-    public static bool FindPathBetweenNodes(GridNode startNode, GridNode endNode, out PathRoute route)
+    public static bool FindPathBetweenNodes(GridNode startNode, GridNode endNode, bool solid, Factions faction, out PathRoute route)
     {
         route = null;
 
@@ -27,7 +27,7 @@ public static class PathfindingSystem
             return false;
         }
 
-        PathOperation pathingOperation = new (startNode, endNode);
+        PathOperation pathingOperation = new (startNode, endNode, solid, faction);
 
         if (!pathingOperation.StartOperation())
         {

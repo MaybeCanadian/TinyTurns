@@ -119,6 +119,30 @@ public class GridNode
     {
         return gridPos;
     }
+    public bool GetIsPathable(Factions faction)
+    {
+        foreach(Object obj in objectsOnNode)
+        {
+            if(!obj.CanPathThrough(faction))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    public bool GetIsStandable(Factions faction)
+    {
+        foreach (Object obj in objectsOnNode)
+        {
+            if (!obj.CanStandOn(faction))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
     #endregion
 
     #region Objects
