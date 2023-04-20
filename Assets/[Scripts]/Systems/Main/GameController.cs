@@ -15,6 +15,7 @@ public class GameController : MonoBehaviour
     public static GameController instance;
 
     [Header("Players")]
+    public ObjectData objectData = null;
     public PlayerObjectData playerData;
     public PathfindingObjectData blueData;
     public int numObjects = 10;
@@ -56,12 +57,18 @@ public class GameController : MonoBehaviour
     {
         Grid grid = GridManager.GenerateMapGrid();
 
+        Vector2Int start;
+
         for (int i = 0; i < numObjects; i++)
         {
-            Vector2Int start = grid.GetRandomWalkableLocationOnGrid();
+            start = grid.GetRandomWalkableLocationOnGrid();
 
-            PlayerObject obj = ObjectManager.CreatePlayerObject(playerData, start);
+            Object obj = ObjectManager.CreateObject(objectData, start);
         }
+
+        start = grid.GetRandomWalkableLocationOnGrid();
+
+        PlayerObject playerObj = ObjectManager.CreatePlayerObject(playerData, start);
 
         controller = new PlayerController();
 

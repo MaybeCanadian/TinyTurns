@@ -6,5 +6,6 @@ public enum EntityList
 {
     NULL,
     Bobby,
-    Greg
+    Greg,
+    Box
 }
