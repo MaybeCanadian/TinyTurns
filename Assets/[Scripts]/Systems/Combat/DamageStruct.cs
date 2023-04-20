@@ -9,6 +9,7 @@ public struct DamageStruct
     [Header("Damage")]
     public float amount;
     public DamageTypes damageType;
+    public TargetTypes targetType;
 
     [Header("Owner")]
     public BattlerObject source;
@@ -20,13 +21,24 @@ public struct ResistanceStruct
     [Header("Resistance")]
     public float amount;
     public DamageTypes damageType;
-    public ResistanceTypes resistanceType;
+    public TargetTypes targetType;
+    public ModificationTypes modificationType;
 }
 
 [System.Serializable]
 public struct HealingStruct
 {
     public float amount;
+    public HealingSources healingSource;
+    public TargetTypes targetType;
+}
+public struct HealingBuffStruct
+{
+    public float amount;
+    public HealingSources healingSource;
+    public TargetTypes targetType;
+    public ModificationTypes modificationType;
+
 }
 #endregion
 
@@ -51,10 +63,19 @@ public enum TargetTypes
 }
 
 [System.Serializable]
-public enum ResistanceTypes
+public enum ModificationTypes
 {
     PERCENT,
     FLAT
+}
+
+[System.Serializable]
+public enum HealingSources
+{
+    UNTYPED,
+    MAGICAL,
+    POTION,
+    RESTING
 }
 #endregion
 
