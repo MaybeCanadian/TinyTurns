@@ -24,11 +24,16 @@ public static class InputController
     #endregion
 
     #region Actions
-    public delegate void ButtonEvents(InputAction<bool> context);
-    public static ButtonEvents OnCameraCenterButtonPressed;
+    //public delegate void ButtonEvents(InputAction<bool> context);
+    //public static ButtonEvents OnCameraCenterButtonPressed;
 
-    public delegate void ActionEvents(InputAction<Vector2> context);
-    public static ActionEvents OnCameraMoveAction;
+    //public delegate void ActionEvents(InputAction<Vector2> context);
+    //public static ActionEvents OnCameraMoveAction;
+    #endregion
+
+    #region Buttons Events
+    public delegate void ButtonEvent();
+    public static ButtonEvent damageEvent;
     #endregion
 
     #endregion
@@ -195,7 +200,10 @@ public static class InputController
     #region Input
     private static void GetButtonInputs()
     {
-        
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            damageEvent?.Invoke();
+        }
     }
     private static bool GetCamera()
     {

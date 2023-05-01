@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c82be4b973068064c90b6693f4756f0f, type: 3}
   m_Name: BoxObject
   m_EditorClassIdentifier: 
-  ObjectName: Name
-  entityModel: 0
+  ObjectName: Box
+  entityModel: 3
   objectBlocking:
-    solid: 0
+    solid: 1
     faction: 0
     allowAnyPathingThrough: 0
     allowFactionPathingThrough: 0

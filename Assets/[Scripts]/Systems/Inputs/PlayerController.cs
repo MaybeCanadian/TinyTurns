@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerController
@@ -19,13 +18,13 @@ public class PlayerController
 
     private void ConnectEvents()
     {
-        Debug.Log("Events Connected");
-
         InputController.OnMouseDown += OnMouseDown;
         InputController.OnMouseUp += OnMouseUp;
         InputController.OnMouseHeld += OnMouseHeld;
 
         GridNode.OnNodeMouseDown += OnGridNodeMouseDown;
+
+        InputController.damageEvent += OnDamageEvent;
     }
     private void DisconnectEvents()
     {
@@ -34,6 +33,8 @@ public class PlayerController
         InputController.OnMouseHeld -= OnMouseHeld;
 
         GridNode.OnNodeMouseDown -= OnGridNodeMouseDown;
+
+        InputController.damageEvent -= OnDamageEvent;   
     }
     #endregion
 
@@ -73,6 +74,19 @@ public class PlayerController
         if(button == 0)
         {
             HandleNodeClickedMainMouse(node);
+        }
+    }
+    private void OnDamageEvent()
+    {
+        if(activePlayer != null)
+        {
+            DamageStruct testDamage;
+            testDamage.amount = 1;
+            testDamage.damageType = DamageTypes.UNTYPED;
+            testDamage.targetType = TargetTypes.UNTYPED;
+            testDamage.source = null;
+
+            activePlayer.TakeDamage(testDamage);
         }
     }
     #endregion

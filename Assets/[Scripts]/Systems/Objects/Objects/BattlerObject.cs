@@ -69,13 +69,13 @@ public class BattlerObject : PathfindingObject
             amount /= percent;
         }
 
-        amount = Mathf.Min(amount, 0.0f);
+        amount = Mathf.Max(amount, 0.0f);
 
         float oldCurrent = currentHealth;
 
         currentHealth -= amount;
 
-        currentHealth = Mathf.Min(currentHealth, 0.0f);
+        currentHealth = Mathf.Max(currentHealth, 0.0f);
 
         OnHealthLostUnAdjusted?.Invoke(amount);
         OnHealthLostAdjusted?.Invoke(oldCurrent - currentHealth);
@@ -124,7 +124,7 @@ public class BattlerObject : PathfindingObject
 
         currentHealth += amount;
 
-        currentHealth = Mathf.Max(currentHealth, maxHealth);
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
 
         OnHealthGainedUnadjusted?.Invoke(amount);
         OnHealthGainedAdjusted?.Invoke(currentHealth - oldCurrent);
@@ -133,6 +133,8 @@ public class BattlerObject : PathfindingObject
     }
     private void CheckDead()
     {
+        Debug.Log("Current health is " + currentHealth);
+
         if(currentHealth <= 0.0f)
         {
             PlayerDead();
