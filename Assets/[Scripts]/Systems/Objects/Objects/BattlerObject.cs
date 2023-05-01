@@ -135,18 +135,18 @@ public class BattlerObject : PathfindingObject
     {
         Debug.Log("Current health is " + currentHealth);
 
-        if(currentHealth <= 0.0f)
+        OnHealthPercentChanged?.Invoke(currentHealth / maxHealth);
+
+        if (currentHealth <= 0.0f)
         {
             PlayerDead();
-
-            OnBattlerDied?.Invoke();
         }
-
-        OnHealthPercentChanged?.Invoke(currentHealth / maxHealth);
     }
     private void PlayerDead()
     {
-        //o sheet he dead
+        OnBattlerDied?.Invoke();
+
+        DestroyObject();
     }
 
     #endregion
